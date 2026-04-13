@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일목균형표 시그널 대시보드</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06080e;
+  --surface: #0d1017;
+  --card: #111620;
+  --border: #1a1f2e;
+  --border-light: #252b3d;
+  --text: #e2e5eb;
+  --text-dim: #6b7280;
+  --text-muted: #444c5c;
+  --buy: #10b981;
+  --buy-bg: rgba(16,185,129,0.08);
+  --buy-border: rgba(16,185,129,0.2);
+  --sell: #ef4444;
+  --sell-bg: rgba(239,68,68,0.08);
+  --sell-border: rgba(239,68,68,0.2);
+  --accent: #3b82f6;
+  --accent-dim: rgba(59,130,246,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', -apple-system, sans-serif;
+  min-height: 100vh;
+}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.mono { font-family: 'IBM Plex Mono', 'Fira Code', monospace; }
+
+/* Header */
+.header {
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--buy);
+  box-shadow: 0 0 8px rgba(16,185,129,0.4);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.header-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+.header-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; letter-spacing: 1px; }
+
+/* Stat Cards */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  padding: 16px 24px;
+}
+.stat-card {
+  border-radius: 8px;
+  padding: 14px 16px;
+  transition: transform 0.15s;
+}
+.stat-card:hover { transform: translateY(-1px); }
+.stat-card.buy { background: var(--buy-bg); border: 1px solid var(--buy-border); }
+.stat-card.sell { background: var(--sell-bg); border: 1px solid var(--sell-border); }
+.stat-label {
+  font-size: 10px; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
+}
+.stat-value { font-size: 24px; font-weight: 800; }
+.stat-value.buy { color: var(--buy); }
+.stat-value.sell { color: var(--sell); }
+.stat-sub { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+
+/* Controls */
+.controls {
+  padding: 0 24px 12px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.tab-group {
+  display: flex; background: var(--surface);
+  border-radius: 6px; border: 1px solid var(--border); overflow: hidden;
+}
+.tab-btn {
+  background: transparent; border: none; border-bottom: 2px solid transparent;
+  color: var(--text-dim); padding: 8px 20px; font-size: 13px;
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.tab-btn.active-buy { background: rgba(16,185,129,0.08); border-bottom-color: var(--buy); color: var(--buy); font-weight: 700; }
+.tab-btn.active-sell { background: rgba(239,68,68,0.08); border-bottom-color: var(--sell); color: var(--sell); font-weight: 700; }
+.market-btn {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-dim); padding: 5px 12px; border-radius: 4px;
+  font-size: 11px; cursor: pointer; font-family: 'IBM Plex Mono', monospace;
+  transition: all 0.15s;
+}
+.market-btn.active {
+  background: var(--accent-dim); border-color: rgba(59,130,246,0.4);
+  color: var(--accent); font-weight: 600;
+}
+.search-input {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 7px 14px; color: var(--text);
+  font-size: 12px; font-family: inherit; width: 200px; outline: none;
+  margin-left: auto; transition: border-color 0.15s;
+}
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--text-muted); }
+
+/* Table */
+.table-wrap {
+  margin: 0 24px 24px; background: var(--card);
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  padding: 10px 12px; text-align: right; color: var(--text-dim);
+  font-weight: 500; font-size: 11px; letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border); text-transform: uppercase;
+  cursor: pointer; user-select: none; white-space: nowrap;
+}
+thead th:first-child { text-align: left; }
+thead th.sorted { color: var(--text); }
+tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+tbody tr:nth-child(even) { background: var(--surface); }
+tbody tr:hover { background: rgba(59,130,246,0.04); }
+tbody td { padding: 10px 12px; text-align: right; font-size: 13px; }
+tbody td:first-child { text-align: left; }
+.stock-info { display: flex; align-items: center; gap: 8px; }
+.market-tag {
+  display: inline-block; padding: 1px 5px; border-radius: 3px;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+}
+.market-tag.kospi { background: var(--accent-dim); color: var(--accent); }
+.market-tag.kosdaq { background: rgba(16,185,129,0.1); color: var(--buy); }
+.stock-name { font-weight: 600; font-size: 13px; }
+.stock-code { color: var(--text-muted); font-size: 10px; }
+.change-up { color: var(--buy); font-weight: 600; }
+.change-down { color: var(--sell); font-weight: 600; }
+.change-flat { color: var(--text-dim); }
+.table-footer { padding: 12px; color: var(--text-muted); font-size: 11px; }
+
+/* Footer */
+.footer {
+  padding: 16px 24px; border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px;
+}
+.footer-text { font-size: 10px; color: var(--text-muted); line-height: 1.6; }
+
+/* Loading */
+.loading {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 80px 20px; color: var(--text-dim);
+}
+.spinner {
+  width: 32px; height: 32px; border: 3px solid var(--border);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin 0.8s linear infinite; margin-bottom: 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .stats { padding: 12px 16px; grid-template-columns: 1fr 1fr; }
+  .controls { padding: 0 16px 12px; }
+  .table-wrap { margin: 0 16px 16px; }
+  .search-input { width: 100%; margin-left: 0; }
+  .stat-value { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div>시그널 데이터를 불러오는 중...</div>
+  </div>
+</div>
+
+<script>
+// ── State ──
+let state = {
+  data: null,
+  tab: 'buy',
+  market: 'ALL',
+  search: '',
+  sortKey: 'volume',
+  sortAsc: false,
+  error: null,
+};
+
+// ── Data Fetching ──
+async function loadData() {
+  // 1) API 서버에서 시도
+  try {
+    const res = await fetch('/api/signals');
+    if (res.ok) {
+      const json = await res.json();
+      if (json.buy) { state.data = json; render(); return; }
+    }
+  } catch(e) {}
+
+  // 2) 같은 폴더의 latest.json 시도
+  try {
+    const res = await fetch('./data/latest.json');
+    if (res.ok) {
+      const json = await res.json();
+      if (json.buy) { state.data = json; render(); return; }
+    }
+  } catch(e) {}
+
+  // 3) 데이터 없음
+  state.error = 'API 서버가 실행 중이 아니거나 스캔 데이터가 없습니다.';
+  render();
+}
+
+// ── Helpers ──
+const fmt = (n) => n != null ? n.toLocaleString('ko-KR') : '—';
+const fmtVol = (n) => n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(0)+'K' : n;
+const fmtChange = (v) => v > 0 ? `+${v.toFixed(2)}%` : `${v.toFixed(2)}%`;
+const esc = (s) => s.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+// ── Render ──
+function render() {
+  const app = document.getElementById('app');
+  const d = state.data;
+
+  if (state.error) {
+    app.innerHTML = `
+      <div class="loading">
+        <div style="font-size:36px;margin-bottom:16px">⚠</div>
+        <div>${esc(state.error)}</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--text-muted)">
+          스캐너를 실행하세요: py -3.12 ichimoku_scanner.py --json data/latest.json
+        </div>
+      </div>`;
+    return;
+  }
+  if (!d) {
+    app.innerHTML = `<div class="loading"><div class="spinner"></div><div>불러오는 중...</div></div>`;
+    return;
+  }
+
+  const buyCount = d.buy.length;
+  const sellCount = d.sell.length;
+  const kospiB = d.buy.filter(r=>r.market==='KOSPI').length;
+  const kosdaqB = d.buy.filter(r=>r.market==='KOSDAQ').length;
+  const kospiS = d.sell.filter(r=>r.market==='KOSPI').length;
+  const kosdaqS = d.sell.filter(r=>r.market==='KOSDAQ').length;
+  const avgBuy = buyCount ? (d.buy.reduce((s,r)=>s+r.change,0)/buyCount).toFixed(1) : '0';
+  const avgSell = sellCount ? (d.sell.reduce((s,r)=>s+r.change,0)/sellCount).toFixed(1) : '0';
+
+  // Filter & sort
+  let rows = state.tab === 'buy' ? [...d.buy] : [...d.sell];
+  if (state.market !== 'ALL') rows = rows.filter(r => r.market === state.market);
+  if (state.search) {
+    const q = state.search.toLowerCase();
+    rows = rows.filter(r => r.name.toLowerCase().includes(q) || r.code.includes(q));
+  }
+  rows.sort((a,b) => state.sortAsc ? a[state.sortKey]-b[state.sortKey] : b[state.sortKey]-a[state.sortKey]);
+
+  const isBuy = state.tab === 'buy';
+  const tabBuyClass = state.tab==='buy' ? 'active-buy' : '';
+  const tabSellClass = state.tab==='sell' ? 'active-sell' : '';
+
+  app.innerHTML = `
+    <header class="header">
+      <div class="header-left">
+        <div class="header-dot"></div>
+        <div>
+          <div class="header-title">일목균형표 시그널</div>
+          <div class="header-sub mono">ICHIMOKU CLOUD SIGNAL SCANNER</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="mono" style="font-size:13px;font-weight:600">${esc(d.date)}</div>
+        <div style="font-size:10px;color:var(--text-dim)">${d.total_scanned?.toLocaleString() || '—'}종목 스캔</div>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="stat-card buy">
+        <div class="stat-label">매수 시그널</div>
+        <div class="stat-value buy mono">${buyCount}</div>
+        <div class="stat-sub">KOSPI ${kospiB} · KOSDAQ ${kosdaqB}</div>
+      </div>
+      <div class="stat-card sell">
+        <div class="stat-label">매도 시그널</div>
+        <div class="stat-value sell mono">${sellCount}</div>
+        <div class="stat-sub">KOSPI ${kospiS} · KOSDAQ ${kosdaqS}</div>
+      </div>
+      <div class="stat-card buy">
+        <div class="stat-label">매수 평균 등락</div>
+        <div class="stat-value buy mono">${avgBuy}%</div>
+        <div class="stat-sub">전일 대비</div>
+      </div>
+      <div class="stat-card sell">
+        <div class="stat-label">매도 평균 등락</div>
+        <div class="stat-value sell mono">${avgSell}%</div>
+        <div class="stat-sub">전일 대비</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="tab-group">
+        <button class="tab-btn ${tabBuyClass}" onclick="setTab('buy')">매수 ${buyCount}</button>
+        <button class="tab-btn ${tabSellClass}" onclick="setTab('sell')">매도 ${sellCount}</button>
+      </div>
+      <button class="market-btn ${state.market==='ALL'?'active':''}" onclick="setMarket('ALL')">ALL</button>
+      <button class="market-btn ${state.market==='KOSPI'?'active':''}" onclick="setMarket('KOSPI')">KOSPI</button>
+      <button class="market-btn ${state.market==='KOSDAQ'?'active':''}" onclick="setMarket('KOSDAQ')">KOSDAQ</button>
+      <input class="search-input" type="text" placeholder="종목명 또는 코드 검색..." value="${esc(state.search)}" oninput="setSearch(this.value)">
+    </div>
+
+    <div class="table-wrap">
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>종목</th>
+              <th class="${state.sortKey==='close'?'sorted':''}" onclick="setSort('close')">종가 ${state.sortKey==='close'?(state.sortAsc?'↑':'↓'):''}</th>
+              <th class="${state.sortKey==='change'?'sorted':''}" onclick="setSort('change')">등락 ${state.sortKey==='change'?(state.sortAsc?'↑':'↓'):''}</th>
+              <th class="${state.sortKey==='cloud_top'?'sorted':''}" onclick="setSort('cloud_top')">구름상단 ${state.sortKey==='cloud_top'?(state.sortAsc?'↑':'↓'):''}</th>
+              <th class="${state.sortKey==='cloud_bot'?'sorted':''}" onclick="setSort('cloud_bot')">구름하단 ${state.sortKey==='cloud_bot'?(state.sortAsc?'↑':'↓'):''}</th>
+              <th class="${state.sortKey==='volume'?'sorted':''}" onclick="setSort('volume')">거래량 ${state.sortKey==='volume'?(state.sortAsc?'↑':'↓'):''}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.length === 0 ? '<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--text-muted)">조건에 맞는 종목이 없습니다</td></tr>' : ''}
+            ${rows.map(r => {
+              const changeClass = r.change > 0 ? 'change-up' : r.change < 0 ? 'change-down' : 'change-flat';
+              const tagClass = r.market === 'KOSPI' ? 'kospi' : 'kosdaq';
+              const tagText = r.market === 'KOSPI' ? 'KP' : 'KD';
+              return `<tr>
+                <td>
+                  <div class="stock-info">
+                    <span class="market-tag ${tagClass} mono">${tagText}</span>
+                    <div>
+                      <div class="stock-name">${esc(r.name)}</div>
+                      <div class="stock-code mono">${r.code}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="mono" style="font-weight:600">${fmt(r.close)}</td>
+                <td class="mono ${changeClass}">${fmtChange(r.change)}</td>
+                <td class="mono" style="color:var(--text-dim)">${fmt(r.cloud_top)}</td>
+                <td class="mono" style="color:var(--text-dim)">${fmt(r.cloud_bot)}</td>
+                <td class="mono" style="color:var(--text-dim)">${fmtVol(r.volume)}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div class="table-footer">${rows.length}개 종목 표시</div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-text">
+        구름대 상단 돌파 = 매수 시그널 · 구름대 하단 이탈 = 매도 시그널<br>
+        ※ 본 자료는 기술적 지표 참고용이며, 투자 판단은 본인 책임입니다.
+      </div>
+      <div class="footer-text mono">Powered by 밸류파인더</div>
+    </div>
+  `;
+}
+
+// ── Event Handlers ──
+function setTab(t) { state.tab = t; render(); }
+function setMarket(m) { state.market = m; render(); }
+function setSearch(v) { state.search = v; render(); }
+function setSort(key) {
+  if (state.sortKey === key) state.sortAsc = !state.sortAsc;
+  else { state.sortKey = key; state.sortAsc = false; }
+  render();
+}
+
+// ── Init ──
+loadData();
+</script>
+</body>
+</html>
