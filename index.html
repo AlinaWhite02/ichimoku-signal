@@ -145,7 +145,7 @@ tbody td:first-child { text-align: left; }
 }
 .market-tag.kospi { background: var(--accent-dim); color: var(--accent); }
 .market-tag.kosdaq { background: rgba(16,185,129,0.1); color: var(--buy); }
-.stock-name { font-weight: 600; font-size: 13px; }
+.stock-name { font-weight: 600; font-size: 13px; cursor: pointer; transition: color 0.15s; }
 .stock-code { color: var(--text-muted); font-size: 10px; }
 .change-up { color: var(--buy); font-weight: 600; }
 .change-down { color: var(--sell); font-weight: 600; }
@@ -216,7 +216,7 @@ async function loadData() {
 
   // 2) 같은 폴더의 latest.json 시도
   try {
-    const res = await fetch('https://raw.githubusercontent.com/AlinaWhite02/ichimoku-signal/main/data/latest.json');
+    const res = await fetch('./data/latest.json');
     if (res.ok) {
       const json = await res.json();
       if (json.buy) { state.data = json; render(); return; }
@@ -350,7 +350,7 @@ function render() {
                   <div class="stock-info">
                     <span class="market-tag ${tagClass} mono">${tagText}</span>
                     <div>
-                      <div class="stock-name">${esc(r.name)}</div>
+                      <a href="stock.html?code=${r.code}" class="stock-name" style="color:var(--text);text-decoration:none" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">${esc(r.name)}</a>
                       <div class="stock-code mono">${r.code}</div>
                     </div>
                   </div>
