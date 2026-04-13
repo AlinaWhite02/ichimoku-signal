@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>종목 상세 — 일목균형표 시그널</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06080e;
+  --surface: #0d1017;
+  --card: #111620;
+  --border: #1a1f2e;
+  --text: #e2e5eb;
+  --text-dim: #6b7280;
+  --text-muted: #444c5c;
+  --buy: #10b981;
+  --sell: #ef4444;
+  --accent: #3b82f6;
+  --accent-dim: rgba(59,130,246,0.12);
+  --gold: #f59e0b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.mono { font-family: 'IBM Plex Mono', monospace; }
+.serif { font-family: 'Noto Serif KR', serif; }
+
+/* Layout */
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+/* Back Nav */
+.back-nav {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.back-nav a { color: var(--text-dim); display: inline-flex; align-items: center; gap: 6px; }
+.back-nav a:hover { color: var(--accent); text-decoration: none; }
+
+/* Hero */
+.hero { padding: 32px 0 24px; border-bottom: 1px solid var(--border); }
+.hero-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+.hero-left {}
+.stock-market {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.stock-market.kospi { background: var(--accent-dim); color: var(--accent); }
+.stock-market.kosdaq { background: rgba(16,185,129,0.1); color: var(--buy); }
+.stock-name { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+.stock-code { font-size: 14px; color: var(--text-dim); }
+.hero-right { text-align: right; }
+.stock-price { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+.stock-change { font-size: 14px; margin-top: 4px; }
+.stock-change.up { color: var(--buy); }
+.stock-change.down { color: var(--sell); }
+
+/* Signal Badge */
+.signal-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 13px; font-weight: 700; margin-top: 12px;
+}
+.signal-badge.buy { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: var(--buy); }
+.signal-badge.sell { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: var(--sell); }
+.signal-badge.neutral { background: var(--accent-dim); border: 1px solid rgba(59,130,246,0.3); color: var(--accent); }
+
+/* Metric Cards */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.metric {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.metric-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.metric-value { font-size: 16px; font-weight: 700; }
+.metric-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+/* Cloud Status */
+.cloud-status {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.cloud-title { font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+.cloud-bar {
+  position: relative;
+  height: 48px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.cloud-zone {
+  position: absolute;
+  top: 0; bottom: 0;
+  background: rgba(59,130,246,0.08);
+  border-left: 1px dashed rgba(59,130,246,0.3);
+  border-right: 1px dashed rgba(59,130,246,0.3);
+}
+.cloud-marker {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid;
+}
+.cloud-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); }
+
+/* Tabs */
+.tabs {
+  display: flex; gap: 0;
+  border-bottom: 1px solid var(--border);
+  padding-top: 24px;
+  overflow-x: auto;
+}
+.tab-btn {
+  background: transparent; border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-dim);
+  padding: 10px 20px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+  font-weight: 700;
+}
+.tab-btn:hover { color: var(--text); }
+
+/* Tab Content */
+.tab-content { display: none; padding: 24px 0 48px; }
+.tab-content.active { display: block; }
+
+/* Report Styles */
+.report-section { margin-bottom: 36px; }
+.report-section-title {
+  font-size: 11px; font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.report-body {
+  font-size: 14px;
+  line-height: 1.85;
+  color: #c8ccd4;
+}
+.report-body p { margin-bottom: 14px; }
+.report-body strong { color: var(--text); font-weight: 600; }
+
+/* Financial Table */
+.fin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin: 12px 0;
+}
+.fin-table th {
+  padding: 8px 10px;
+  text-align: right;
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+}
+.fin-table th:first-child { text-align: left; }
+.fin-table td {
+  padding: 8px 10px;
+  text-align: right;
+  border-bottom: 1px solid rgba(26,31,46,0.5);
+}
+.fin-table td:first-child { text-align: left; color: var(--text-dim); }
+.fin-table tr:hover { background: var(--surface); }
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.empty-state-icon { font-size: 40px; margin-bottom: 16px; }
+.empty-state-title { font-size: 16px; color: var(--text-dim); margin-bottom: 8px; }
+.empty-state-desc { font-size: 13px; line-height: 1.6; }
+
+/* Footer */
+.detail-footer {
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 640px) {
+  .hero-top { flex-direction: column; }
+  .hero-right { text-align: left; }
+  .stock-name { font-size: 22px; }
+  .stock-price { font-size: 26px; }
+  .metrics { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <div class="empty-state" style="padding:120px 20px">
+    <div class="empty-state-icon">📊</div>
+    <div class="empty-state-title">종목 데이터를 불러오는 중...</div>
+  </div>
+</div>
+
+<script>
+// ── URL에서 종목코드 추출 ──
+const params = new URLSearchParams(window.location.search);
+const stockCode = params.get('code') || '248070';
+
+// ── 기업분석 리포트 데이터 (JSON으로 관리) ──
+// 리포트가 있는 종목만 여기에 추가
+const REPORTS = {
+  "248070": {
+    name: "솔루엠",
+    summary: "2015년 삼성전기 파워모듈/ESL 사업부에서 분사(Carve-out)하여 설립, 2021년 유가증권시장에 상장된 전자부품 및 ESL(전자식 가격표시기) 전문 기업. 삼성전기 시절부터 45년간 축적된 RF·파워 기술을 기반으로 글로벌 ESL 시장 점유율 2위를 달성.",
+    sections: [
+      {
+        title: "사업부문별 매출비중",
+        content: "전자부품 부문이 1조 1,252억원(66.2%), ICT 부문이 5,751억원(33.8%)으로 총 매출 1조 7,002억원. 전자부품 부문은 영업이익 20억원(OPM 0.2%)으로 수익성이 극히 낮은 반면, ICT 부문은 영업이익 445억원(OPM 7.7%)으로 회사 이익의 대부분을 ESL이 견인하고 있다."
+      },
+      {
+        title: "사업모델",
+        content: "<p>동사는 두 축으로 수익을 창출한다.</p><p>첫째, <strong>전자부품 사업</strong>으로 TV용 파워모듈(SMPS), 모바일 아답터, 서버용 파워모듈, EV 충전기 파워모듈, 3IN1보드를 생산한다. 삼성전자를 최대 고객으로 두고, 중국·베트남·멕시코·인도 등 해외 생산법인에서 제조 후 글로벌 삼성전자 공장에 납품하는 구조다.</p><p>둘째, <strong>ICT 사업(ESL)</strong>으로 전자식 가격표시기를 설계·제조·판매한다. 글로벌 대형 유통업체(Tesco, REWE, EDEKA, METRO, Carrefour 등)와 공장(BMW, Volkswagen, Bosch, SpaceX 등)에 공급하고, 국내에서는 롯데백화점·올리브영·이마트에브리데이 등에 시장점유율 90% 이상을 유지하고 있다.</p>"
+      },
+      {
+        title: "주요 경쟁사",
+        content: "<p><strong>ESL</strong> — VUSION Group(프랑스, 글로벌 1위), Pricer(스웨덴, 3위), Hanshow(중국). 동사는 자체 생산, 풀 Supply Chain, 디자인 차별화로 후발 진입 장벽을 극복.</p><p><strong>파워모듈</strong> — Delta Electronics(대만), Lite-On(대만), Chicony(대만), TDK-Lambda(일본) 등.</p>"
+      },
+      {
+        title: "리스크 요인",
+        content: "<p><strong>전자부품 수익성 악화</strong> — 전자부품 부문 OPM이 0.2%로 사실상 손익분기 수준이다. 아답터 시장 축소, TV 수요 정체 등 구조적 요인이 작용하고 있다.</p><p><strong>부채 수준</strong> — 부채비율 126.8%(2025년말), 차입금이 4,280억원 수준으로 성장 투자에 따른 재무 부담이 존재한다.</p><p><strong>ESL 경쟁 심화</strong> — 중국 Hanshow 등 저가 경쟁사의 부상, VUSION Group의 글로벌 1위 수성 전략 등으로 가격 경쟁이 심화될 수 있다.</p>"
+      }
+    ],
+    financials: {
+      headers: ["", "2023", "2024", "2025"],
+      rows: [
+        ["매출액", "20,389", "15,683", "17,002"],
+        ["영업이익", "1,601", "415", "465"],
+        ["OPM", "7.9%", "2.6%", "2.7%"],
+        ["순이익", "1,006", "169", "178"],
+      ]
+    }
+  },
+};
+
+// ── 시그널 데이터에서 종목 정보 가져오기 ──
+async function loadStockData(code) {
+  // latest.json에서 해당 종목 찾기
+  const urls = [
+    '/api/signals',
+    './data/latest.json',
+    'https://raw.githubusercontent.com/AlinaWhite02/ichimoku-signal/main/data/latest.json',
+  ];
+
+  for (const url of urls) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (!data.buy) continue;
+
+      const allStocks = [...(data.buy || []), ...(data.sell || [])];
+      const stock = allStocks.find(s => s.code === code);
+
+      return { signalData: data, stock, date: data.date };
+    } catch(e) { continue; }
+  }
+  return { signalData: null, stock: null, date: null };
+}
+
+// ── Render ──
+function fmt(n) { return n != null ? n.toLocaleString('ko-KR') : '—'; }
+function fmtChange(v) { return v > 0 ? `+${v.toFixed(2)}%` : `${v.toFixed(2)}%`; }
+
+function render(stock, report, date) {
+  const app = document.getElementById('app');
+  const hasReport = !!report;
+  const isKospi = stock?.market === 'KOSPI';
+
+  // Signal type
+  let signalType = 'neutral';
+  let signalLabel = '관망 (구름 안)';
+  if (stock) {
+    if (stock.close > stock.cloud_top) { signalType = 'buy'; signalLabel = '매수 구간 (구름 상단 돌파)'; }
+    else if (stock.close < stock.cloud_bot) { signalType = 'sell'; signalLabel = '매도 구간 (구름 하단 이탈)'; }
+  }
+
+  const name = stock?.name || report?.name || '종목';
+  const code = stockCode;
+
+  // Cloud bar visualization
+  let cloudBarHTML = '';
+  if (stock) {
+    const min = Math.min(stock.cloud_bot, stock.close) * 0.97;
+    const max = Math.max(stock.cloud_top, stock.close) * 1.03;
+    const range = max - min;
+    const botPct = ((stock.cloud_bot - min) / range * 100);
+    const topPct = ((stock.cloud_top - min) / range * 100);
+    const pricePct = ((stock.close - min) / range * 100);
+    const markerColor = signalType === 'buy' ? 'var(--buy)' : signalType === 'sell' ? 'var(--sell)' : 'var(--accent)';
+
+    cloudBarHTML = `
+      <div class="cloud-status">
+        <div class="cloud-title">구름대 포지션</div>
+        <div class="cloud-bar">
+          <div class="cloud-zone" style="left:${botPct}%;width:${topPct-botPct}%"></div>
+          <div class="cloud-marker" style="left:${pricePct}%;background:${markerColor};border-color:${markerColor}"></div>
+        </div>
+        <div class="cloud-labels">
+          <span>${fmt(Math.round(min))}</span>
+          <span>구름 하단 ${fmt(stock.cloud_bot)}</span>
+          <span>구름 상단 ${fmt(stock.cloud_top)}</span>
+          <span>${fmt(Math.round(max))}</span>
+        </div>
+      </div>`;
+  }
+
+  // Report tabs
+  const reportTabsHTML = hasReport ? `
+    <button class="tab-btn active" onclick="switchTab('overview')">기업개요</button>
+    <button class="tab-btn" onclick="switchTab('analysis')">사업분석</button>
+    ${report.financials ? '<button class="tab-btn" onclick="switchTab(\'financials\')">재무</button>' : ''}
+  ` : `
+    <button class="tab-btn active" onclick="switchTab('overview')">기업개요</button>
+  `;
+
+  // Report content
+  let overviewHTML = '';
+  let analysisHTML = '';
+  let financialsHTML = '';
+
+  if (hasReport) {
+    overviewHTML = `
+      <div class="report-section">
+        <div class="report-section-title">한줄 기업개요</div>
+        <div class="report-body"><p>${report.summary}</p></div>
+      </div>
+      ${report.sections.slice(0, 2).map(s => `
+        <div class="report-section">
+          <div class="report-section-title">${esc(s.title)}</div>
+          <div class="report-body">${s.content.startsWith('<p>') ? s.content : '<p>' + s.content + '</p>'}</div>
+        </div>
+      `).join('')}
+    `;
+
+    analysisHTML = report.sections.slice(2).map(s => `
+      <div class="report-section">
+        <div class="report-section-title">${esc(s.title)}</div>
+        <div class="report-body">${s.content.startsWith('<p>') ? s.content : '<p>' + s.content + '</p>'}</div>
+      </div>
+    `).join('');
+
+    if (report.financials) {
+      const fin = report.financials;
+      financialsHTML = `
+        <div class="report-section">
+          <div class="report-section-title">실적 추이 (단위: 억원)</div>
+          <table class="fin-table mono">
+            <thead><tr>${fin.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+            <tbody>${fin.rows.map(row => `<tr>${row.map((c,i) => `<td${i===0?' style="color:var(--text-dim)"':''}>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+          </table>
+        </div>
+      `;
+    }
+  } else {
+    overviewHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📝</div>
+        <div class="empty-state-title">밸류파인더 기업분석 보고서 준비 중</div>
+        <div class="empty-state-desc">
+          이 종목에 대한 상세 기업분석 보고서가 아직 작성되지 않았습니다.<br>
+          사업보고서 기반의 심층 분석이 완료되면 이 페이지에 게시됩니다.
+        </div>
+      </div>
+    `;
+  }
+
+  app.innerHTML = `
+    <nav class="back-nav">
+      <a href="/">← 대시보드로 돌아가기</a>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-top">
+        <div class="hero-left">
+          <div class="stock-market ${isKospi ? 'kospi' : 'kosdaq'} mono">${stock?.market || 'KOSDAQ'}</div>
+          <div class="stock-name">${esc(name)}</div>
+          <div class="stock-code mono">${code}</div>
+          <div class="signal-badge ${signalType}">${signalType === 'buy' ? '▲' : signalType === 'sell' ? '▼' : '●'} ${signalLabel}</div>
+        </div>
+        ${stock ? `
+        <div class="hero-right">
+          <div class="stock-price mono">${fmt(stock.close)}원</div>
+          <div class="stock-change ${stock.change > 0 ? 'up' : 'down'} mono">${fmtChange(stock.change)}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px">${date || ''} 종가 기준</div>
+        </div>
+        ` : ''}
+      </div>
+    </div>
+
+    ${stock ? `
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label mono">종가</div>
+        <div class="metric-value mono">${fmt(stock.close)}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label mono">구름 상단</div>
+        <div class="metric-value mono" style="color:var(--buy)">${fmt(stock.cloud_top)}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label mono">구름 하단</div>
+        <div class="metric-value mono" style="color:var(--sell)">${fmt(stock.cloud_bot)}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label mono">거래량</div>
+        <div class="metric-value mono">${fmt(stock.volume)}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label mono">전일대비</div>
+        <div class="metric-value mono" style="color:${stock.change>0?'var(--buy)':'var(--sell)'}">${fmtChange(stock.change)}</div>
+      </div>
+    </div>
+    ${cloudBarHTML}
+    ` : ''}
+
+    <div class="tabs">
+      ${reportTabsHTML}
+    </div>
+
+    <div class="tab-content active" id="tab-overview">${overviewHTML}</div>
+    <div class="tab-content" id="tab-analysis">${analysisHTML || '<div class="empty-state"><div class="empty-state-icon">📝</div><div class="empty-state-title">준비 중</div></div>'}</div>
+    <div class="tab-content" id="tab-financials">${financialsHTML || ''}</div>
+
+    <div class="detail-footer">
+      <span>※ 본 자료는 기술적 지표 및 기업 참고자료이며, 투자 판단은 본인 책임입니다.</span>
+      <span class="mono">Powered by 밸류파인더</span>
+    </div>
+  `;
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + id)?.classList.add('active');
+  event.target.classList.add('active');
+}
+
+function esc(s) { return s ? s.replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; }
+
+// ── Init ──
+async function init() {
+  const { stock, date } = await loadStockData(stockCode);
+  const report = REPORTS[stockCode] || null;
+
+  if (!stock && !report) {
+    document.getElementById('app').innerHTML = `
+      <nav class="back-nav"><a href="/">← 대시보드로 돌아가기</a></nav>
+      <div class="empty-state" style="padding:80px 20px">
+        <div class="empty-state-icon">🔍</div>
+        <div class="empty-state-title">종목 정보를 찾을 수 없습니다</div>
+        <div class="empty-state-desc">종목코드: ${stockCode}<br>시그널 데이터에 포함되지 않은 종목이거나, 스캔 데이터가 없습니다.</div>
+      </div>`;
+    return;
+  }
+
+  render(stock, report, date);
+}
+
+init();
+</script>
+</body>
+</html>
