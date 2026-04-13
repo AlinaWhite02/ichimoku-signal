@@ -1,6 +1,6 @@
 {
   "date": "2026-04-13",
-  "scan_time": "07:59",
+  "scan_time": "08:56",
   "total_scanned": 2707,
   "buy": [
     {
@@ -11,7 +11,8 @@
       "change": 29.85,
       "cloud_top": 2360,
       "cloud_bot": 2357,
-      "volume": 11711579
+      "volume": 11724900,
+      "market_cap": 837
     },
     {
       "code": "140430",
@@ -21,7 +22,8 @@
       "change": 29.95,
       "cloud_top": 944,
       "cloud_bot": 714,
-      "volume": 6861178
+      "volume": 6863273,
+      "market_cap": 575
     },
     {
       "code": "347860",
@@ -31,7 +33,8 @@
       "change": 29.76,
       "cloud_top": 1959,
       "cloud_bot": 1685,
-      "volume": 6813127
+      "volume": 6813525,
+      "market_cap": 963
     },
     {
       "code": "065450",
@@ -41,7 +44,8 @@
       "change": 3.7,
       "cloud_top": 5482,
       "cloud_bot": 5272,
-      "volume": 5882307
+      "volume": 5927318,
+      "market_cap": 1613
     },
     {
       "code": "004710",
@@ -51,7 +55,8 @@
       "change": 29.94,
       "cloud_top": 5920,
       "cloud_bot": 5845,
-      "volume": 5811074
+      "volume": 5812984,
+      "market_cap": 2069
     },
     {
       "code": "101240",
@@ -61,7 +66,8 @@
       "change": 9.11,
       "cloud_top": 3955,
       "cloud_bot": 3872,
-      "volume": 3933819
+      "volume": 3944861,
+      "market_cap": 461
     },
     {
       "code": "294630",
@@ -71,7 +77,8 @@
       "change": 18.09,
       "cloud_top": 4340,
       "cloud_bot": 4260,
-      "volume": 3691101
+      "volume": 3707324,
+      "market_cap": 1204
     },
     {
       "code": "047400",
@@ -81,7 +88,8 @@
       "change": 9.2,
       "cloud_top": 1682,
       "cloud_bot": 1458,
-      "volume": 3039030
+      "volume": 3093721,
+      "market_cap": 753
     },
     {
       "code": "115480",
@@ -91,7 +99,8 @@
       "change": 11.65,
       "cloud_top": 565,
       "cloud_bot": 565,
-      "volume": 2762807
+      "volume": 2769799,
+      "market_cap": 360
     },
     {
       "code": "253590",
@@ -101,7 +110,8 @@
       "change": 7.72,
       "cloud_top": 15910,
       "cloud_bot": 14265,
-      "volume": 2177559
+      "volume": 2200653,
+      "market_cap": 7220
     },
     {
       "code": "005290",
@@ -111,7 +121,8 @@
       "change": 5.45,
       "cloud_top": 51012,
       "cloud_bot": 47525,
-      "volume": 2168331
+      "volume": 2168331,
+      "market_cap": 26838
     },
     {
       "code": "257720",
@@ -121,7 +132,8 @@
       "change": 9.96,
       "cloud_top": 46000,
       "cloud_bot": 43475,
-      "volume": 2083529
+      "volume": 2083529,
+      "market_cap": 28689
     },
     {
       "code": "463020",
@@ -131,7 +143,8 @@
       "change": 4.28,
       "cloud_top": 14675,
       "cloud_bot": 14080,
-      "volume": 2059995
+      "volume": 2066672,
+      "market_cap": 1339
     },
     {
       "code": "123010",
@@ -141,7 +154,8 @@
       "change": -0.18,
       "cloud_top": 1115,
       "cloud_bot": 1031,
-      "volume": 1535201
+      "volume": 1662287,
+      "market_cap": 371
     },
     {
       "code": "060310",
@@ -151,7 +165,8 @@
       "change": 7.42,
       "cloud_top": 1419,
       "cloud_bot": 1272,
-      "volume": 1489311
+      "volume": 1493324,
+      "market_cap": 806
     },
     {
       "code": "368600",
@@ -161,7 +176,8 @@
       "change": 30.0,
       "cloud_top": 1070,
       "cloud_bot": 903,
-      "volume": 1361265
+      "volume": 1361308,
+      "market_cap": 295
     },
     {
       "code": "062040",
@@ -171,7 +187,8 @@
       "change": 12.64,
       "cloud_top": 155250,
       "cloud_bot": 155250,
-      "volume": 1250177
+      "volume": 1250177,
+      "market_cap": 52934
     },
     {
       "code": "131030",
@@ -181,17 +198,8 @@
       "change": 15.2,
       "cloud_top": 11142,
       "cloud_bot": 10325,
-      "volume": 1221002
-    },
-    {
-      "code": "021050",
-      "name": "서원",
-      "market": "KOSPI",
-      "close": 1355,
-      "change": 5.78,
-      "cloud_top": 1325,
-      "cloud_bot": 1253,
-      "volume": 1086873
+      "volume": 1224760,
+      "market_cap": 2032
     },
     {
       "code": "003720",
@@ -201,7 +209,19 @@
       "change": 6.08,
       "cloud_top": 7687,
       "cloud_bot": 7415,
-      "volume": 1071038
+      "volume": 1112468,
+      "market_cap": 2669
+    },
+    {
+      "code": "021050",
+      "name": "서원",
+      "market": "KOSPI",
+      "close": 1355,
+      "change": 5.78,
+      "cloud_top": 1325,
+      "cloud_bot": 1253,
+      "volume": 1095283,
+      "market_cap": 643
     },
     {
       "code": "043710",
@@ -211,7 +231,8 @@
       "change": 4.38,
       "cloud_top": 890,
       "cloud_bot": 870,
-      "volume": 1010990
+      "volume": 1014046,
+      "market_cap": 783
     },
     {
       "code": "044380",
@@ -221,7 +242,8 @@
       "change": 7.82,
       "cloud_top": 385,
       "cloud_bot": 377,
-      "volume": 955734
+      "volume": 956434,
+      "market_cap": 257
     },
     {
       "code": "007660",
@@ -231,7 +253,8 @@
       "change": 4.18,
       "cloud_top": 114700,
       "cloud_bot": 114700,
-      "volume": 943329
+      "volume": 943329,
+      "market_cap": 87870
     },
     {
       "code": "347700",
@@ -241,17 +264,8 @@
       "change": 2.92,
       "cloud_top": 39217,
       "cloud_bot": 27000,
-      "volume": 913387
-    },
-    {
-      "code": "089890",
-      "name": "코세스",
-      "market": "KOSDAQ",
-      "close": 26800,
-      "change": 21.54,
-      "cloud_top": 24490,
-      "cloud_bot": 24412,
-      "volume": 778675
+      "volume": 913387,
+      "market_cap": 20041
     },
     {
       "code": "028300",
@@ -261,17 +275,19 @@
       "change": 2.64,
       "cloud_top": 57275,
       "cloud_bot": 54425,
-      "volume": 773159
+      "volume": 781583,
+      "market_cap": 77616
     },
     {
-      "code": "078160",
-      "name": "메디포스트",
+      "code": "089890",
+      "name": "코세스",
       "market": "KOSDAQ",
-      "close": 23900,
-      "change": 18.02,
-      "cloud_top": 21602,
-      "cloud_bot": 20925,
-      "volume": 702582
+      "close": 26800,
+      "change": 21.54,
+      "cloud_top": 24490,
+      "cloud_bot": 24412,
+      "volume": 778675,
+      "market_cap": 4444
     },
     {
       "code": "086980",
@@ -281,7 +297,19 @@
       "change": 5.77,
       "cloud_top": 2780,
       "cloud_bot": 2700,
-      "volume": 700683
+      "volume": 705108,
+      "market_cap": 1778
+    },
+    {
+      "code": "078160",
+      "name": "메디포스트",
+      "market": "KOSDAQ",
+      "close": 23900,
+      "change": 18.02,
+      "cloud_top": 21602,
+      "cloud_bot": 20925,
+      "volume": 702582,
+      "market_cap": 9369
     },
     {
       "code": "067000",
@@ -291,7 +319,8 @@
       "change": 4.71,
       "cloud_top": 2611,
       "cloud_bot": 2592,
-      "volume": 637722
+      "volume": 638131,
+      "market_cap": 1866
     },
     {
       "code": "067630",
@@ -301,7 +330,8 @@
       "change": 4.35,
       "cloud_top": 4290,
       "cloud_bot": 3982,
-      "volume": 593006
+      "volume": 596006,
+      "market_cap": 5260
     },
     {
       "code": "225220",
@@ -311,7 +341,8 @@
       "change": 7.75,
       "cloud_top": 1816,
       "cloud_bot": 1752,
-      "volume": 588846
+      "volume": 590704,
+      "market_cap": 370
     },
     {
       "code": "317330",
@@ -321,7 +352,8 @@
       "change": 9.89,
       "cloud_top": 17500,
       "cloud_bot": 17350,
-      "volume": 576011
+      "volume": 576011,
+      "market_cap": 3937
     },
     {
       "code": "452190",
@@ -331,7 +363,8 @@
       "change": 5.97,
       "cloud_top": 4390,
       "cloud_bot": 4300,
-      "volume": 557882
+      "volume": 560436,
+      "market_cap": 1103
     },
     {
       "code": "356680",
@@ -341,7 +374,8 @@
       "change": 3.5,
       "cloud_top": 7605,
       "cloud_bot": 7605,
-      "volume": 551189
+      "volume": 551189,
+      "market_cap": 2194
     },
     {
       "code": "032750",
@@ -351,7 +385,8 @@
       "change": 4.69,
       "cloud_top": 3515,
       "cloud_bot": 3370,
-      "volume": 544434
+      "volume": 544500,
+      "market_cap": 322
     },
     {
       "code": "079170",
@@ -361,7 +396,8 @@
       "change": 9.35,
       "cloud_top": 6600,
       "cloud_bot": 6555,
-      "volume": 517869
+      "volume": 519755,
+      "market_cap": 358
     },
     {
       "code": "382480",
@@ -371,7 +407,8 @@
       "change": 1.83,
       "cloud_top": 2500,
       "cloud_bot": 2422,
-      "volume": 511169
+      "volume": 516171,
+      "market_cap": 987
     },
     {
       "code": "103590",
@@ -381,7 +418,8 @@
       "change": 2.47,
       "cloud_top": 81300,
       "cloud_bot": 75300,
-      "volume": 496714
+      "volume": 496714,
+      "market_cap": 39578
     },
     {
       "code": "336260",
@@ -391,7 +429,8 @@
       "change": 3.73,
       "cloud_top": 37400,
       "cloud_bot": 35825,
-      "volume": 432357
+      "volume": 432357,
+      "market_cap": 24592
     },
     {
       "code": "114450",
@@ -401,7 +440,8 @@
       "change": 6.09,
       "cloud_top": 2852,
       "cloud_bot": 2692,
-      "volume": 430137
+      "volume": 431003,
+      "market_cap": 575
     },
     {
       "code": "458870",
@@ -411,7 +451,8 @@
       "change": 2.81,
       "cloud_top": 47475,
       "cloud_bot": 45640,
-      "volume": 414581
+      "volume": 414581,
+      "market_cap": 18097
     },
     {
       "code": "402340",
@@ -421,7 +462,8 @@
       "change": 2.11,
       "cloud_top": 571500,
       "cloud_bot": 477250,
-      "volume": 404119
+      "volume": 404119,
+      "market_cap": 766105
     },
     {
       "code": "014470",
@@ -431,7 +473,8 @@
       "change": 3.76,
       "cloud_top": 1375,
       "cloud_bot": 1375,
-      "volume": 400636
+      "volume": 400786,
+      "market_cap": 844
     },
     {
       "code": "460870",
@@ -441,7 +484,8 @@
       "change": 3.93,
       "cloud_top": 3385,
       "cloud_bot": 3230,
-      "volume": 382440
+      "volume": 383074,
+      "market_cap": 690
     },
     {
       "code": "037330",
@@ -451,7 +495,8 @@
       "change": 5.92,
       "cloud_top": 1435,
       "cloud_bot": 1431,
-      "volume": 371091
+      "volume": 371257,
+      "market_cap": 667
     },
     {
       "code": "140070",
@@ -461,7 +506,8 @@
       "change": 5.73,
       "cloud_top": 1998,
       "cloud_bot": 1985,
-      "volume": 362894
+      "volume": 362927,
+      "market_cap": 750
     },
     {
       "code": "102260",
@@ -471,7 +517,8 @@
       "change": 0.46,
       "cloud_top": 4315,
       "cloud_bot": 4315,
-      "volume": 345347
+      "volume": 345360,
+      "market_cap": 2172
     },
     {
       "code": "032620",
@@ -481,7 +528,8 @@
       "change": 2.9,
       "cloud_top": 4005,
       "cloud_bot": 3982,
-      "volume": 323472
+      "volume": 342862,
+      "market_cap": 2129
     },
     {
       "code": "353810",
@@ -491,7 +539,8 @@
       "change": 3.28,
       "cloud_top": 7490,
       "cloud_bot": 7105,
-      "volume": 277555
+      "volume": 279199,
+      "market_cap": 2497
     },
     {
       "code": "057540",
@@ -501,7 +550,8 @@
       "change": 1.42,
       "cloud_top": 847,
       "cloud_bot": 847,
-      "volume": 254901
+      "volume": 256765,
+      "market_cap": 510
     },
     {
       "code": "166090",
@@ -511,37 +561,8 @@
       "change": 3.64,
       "cloud_top": 61550,
       "cloud_bot": 55275,
-      "volume": 205176
-    },
-    {
-      "code": "126560",
-      "name": "현대퓨처넷",
-      "market": "KOSPI",
-      "close": 3440,
-      "change": 2.08,
-      "cloud_top": 3392,
-      "cloud_bot": 3358,
-      "volume": 190561
-    },
-    {
-      "code": "095700",
-      "name": "제넥신",
-      "market": "KOSDAQ",
-      "close": 4875,
-      "change": 0.31,
-      "cloud_top": 4860,
-      "cloud_bot": 4860,
-      "volume": 188605
-    },
-    {
-      "code": "126340",
-      "name": "비나텍",
-      "market": "KOSDAQ",
-      "close": 116200,
-      "change": 10.98,
-      "cloud_top": 114775,
-      "cloud_bot": 100850,
-      "volume": 171116
+      "volume": 205176,
+      "market_cap": 12400
     },
     {
       "code": "015710",
@@ -551,7 +572,41 @@
       "change": 2.43,
       "cloud_top": 3947,
       "cloud_bot": 3895,
-      "volume": 132033
+      "volume": 194189,
+      "market_cap": 702
+    },
+    {
+      "code": "126560",
+      "name": "현대퓨처넷",
+      "market": "KOSPI",
+      "close": 3440,
+      "change": 2.08,
+      "cloud_top": 3392,
+      "cloud_bot": 3358,
+      "volume": 191572,
+      "market_cap": 3790
+    },
+    {
+      "code": "095700",
+      "name": "제넥신",
+      "market": "KOSDAQ",
+      "close": 4875,
+      "change": 0.31,
+      "cloud_top": 4860,
+      "cloud_bot": 4860,
+      "volume": 188804,
+      "market_cap": 2220
+    },
+    {
+      "code": "126340",
+      "name": "비나텍",
+      "market": "KOSDAQ",
+      "close": 116200,
+      "change": 10.98,
+      "cloud_top": 114775,
+      "cloud_bot": 100850,
+      "volume": 171116,
+      "market_cap": 8072
     },
     {
       "code": "175140",
@@ -561,7 +616,8 @@
       "change": 1.9,
       "cloud_top": 4220,
       "cloud_bot": 3901,
-      "volume": 120290
+      "volume": 120379,
+      "market_cap": 1070
     },
     {
       "code": "217190",
@@ -571,7 +627,8 @@
       "change": 4.77,
       "cloud_top": 5727,
       "cloud_bot": 5580,
-      "volume": 103155
+      "volume": 103315,
+      "market_cap": 780
     },
     {
       "code": "033830",
@@ -581,7 +638,8 @@
       "change": 0.49,
       "cloud_top": 612,
       "cloud_bot": 610,
-      "volume": 96447
+      "volume": 96447,
+      "market_cap": 615
     },
     {
       "code": "148930",
@@ -591,7 +649,8 @@
       "change": 4.21,
       "cloud_top": 3015,
       "cloud_bot": 2980,
-      "volume": 82265
+      "volume": 82265,
+      "market_cap": 314
     },
     {
       "code": "066700",
@@ -601,7 +660,8 @@
       "change": 0.86,
       "cloud_top": 2927,
       "cloud_bot": 2685,
-      "volume": 78137
+      "volume": 78466,
+      "market_cap": 1094
     },
     {
       "code": "227610",
@@ -611,7 +671,8 @@
       "change": 1.68,
       "cloud_top": 724,
       "cloud_bot": 695,
-      "volume": 74433
+      "volume": 74436,
+      "market_cap": 276
     },
     {
       "code": "258790",
@@ -621,7 +682,8 @@
       "change": 1.52,
       "cloud_top": 1339,
       "cloud_bot": 1270,
-      "volume": 72274
+      "volume": 73149,
+      "market_cap": 334
     },
     {
       "code": "054050",
@@ -631,7 +693,8 @@
       "change": 0.75,
       "cloud_top": 8095,
       "cloud_bot": 8095,
-      "volume": 64650
+      "volume": 64687,
+      "market_cap": 1298
     },
     {
       "code": "042510",
@@ -641,7 +704,8 @@
       "change": 2.53,
       "cloud_top": 8700,
       "cloud_bot": 8665,
-      "volume": 48423
+      "volume": 48424,
+      "market_cap": 999
     },
     {
       "code": "462870",
@@ -651,7 +715,8 @@
       "change": 0.0,
       "cloud_top": 32750,
       "cloud_bot": 31550,
-      "volume": 46547
+      "volume": 46547,
+      "market_cap": 19376
     },
     {
       "code": "222110",
@@ -661,7 +726,8 @@
       "change": 8.24,
       "cloud_top": 5252,
       "cloud_bot": 5032,
-      "volume": 45914
+      "volume": 45965,
+      "market_cap": 744
     },
     {
       "code": "029460",
@@ -671,7 +737,8 @@
       "change": 4.44,
       "cloud_top": 31700,
       "cloud_bot": 29850,
-      "volume": 41588
+      "volume": 41588,
+      "market_cap": 4240
     },
     {
       "code": "073110",
@@ -681,7 +748,8 @@
       "change": 7.56,
       "cloud_top": 5497,
       "cloud_bot": 5440,
-      "volume": 36879
+      "volume": 37023,
+      "market_cap": 506
     },
     {
       "code": "204020",
@@ -691,7 +759,8 @@
       "change": 2.15,
       "cloud_top": 2129,
       "cloud_bot": 2026,
-      "volume": 33333
+      "volume": 33372,
+      "market_cap": 416
     },
     {
       "code": "270870",
@@ -701,7 +770,8 @@
       "change": 4.12,
       "cloud_top": 4707,
       "cloud_bot": 4465,
-      "volume": 33305
+      "volume": 33355,
+      "market_cap": 442
     },
     {
       "code": "019175",
@@ -711,7 +781,8 @@
       "change": 29.75,
       "cloud_top": 19850,
       "cloud_bot": 18027,
-      "volume": 31726
+      "volume": 31726,
+      "market_cap": 408
     },
     {
       "code": "041650",
@@ -721,7 +792,8 @@
       "change": 1.49,
       "cloud_top": 2687,
       "cloud_bot": 2623,
-      "volume": 30928
+      "volume": 30928,
+      "market_cap": 584
     },
     {
       "code": "012790",
@@ -731,7 +803,8 @@
       "change": 1.16,
       "cloud_top": 6107,
       "cloud_bot": 6105,
-      "volume": 30214
+      "volume": 30215,
+      "market_cap": 732
     },
     {
       "code": "032560",
@@ -741,7 +814,8 @@
       "change": 0.33,
       "cloud_top": 6105,
       "cloud_bot": 6030,
-      "volume": 29642
+      "volume": 29794,
+      "market_cap": 1038
     },
     {
       "code": "043360",
@@ -751,7 +825,8 @@
       "change": 1.96,
       "cloud_top": 2590,
       "cloud_bot": 2517,
-      "volume": 28246
+      "volume": 28246,
+      "market_cap": 234
     },
     {
       "code": "032280",
@@ -761,7 +836,8 @@
       "change": 0.99,
       "cloud_top": 1414,
       "cloud_bot": 1411,
-      "volume": 25046
+      "volume": 25050,
+      "market_cap": 230
     },
     {
       "code": "142280",
@@ -771,7 +847,8 @@
       "change": 0.81,
       "cloud_top": 3710,
       "cloud_bot": 3580,
-      "volume": 17772
+      "volume": 17772,
+      "market_cap": 809
     },
     {
       "code": "067370",
@@ -781,7 +858,8 @@
       "change": 3.94,
       "cloud_top": 5470,
       "cloud_bot": 5367,
-      "volume": 16211
+      "volume": 16211,
+      "market_cap": 675
     },
     {
       "code": "069510",
@@ -791,7 +869,8 @@
       "change": 2.72,
       "cloud_top": 15160,
       "cloud_bot": 15080,
-      "volume": 15982
+      "volume": 15983,
+      "market_cap": 1686
     },
     {
       "code": "007590",
@@ -801,7 +880,8 @@
       "change": 2.18,
       "cloud_top": 5990,
       "cloud_bot": 5925,
-      "volume": 13512
+      "volume": 13522,
+      "market_cap": 827
     },
     {
       "code": "001560",
@@ -811,7 +891,8 @@
       "change": 4.22,
       "cloud_top": 11147,
       "cloud_bot": 11045,
-      "volume": 11908
+      "volume": 11910,
+      "market_cap": 1136
     },
     {
       "code": "239610",
@@ -821,7 +902,8 @@
       "change": 4.59,
       "cloud_top": 7805,
       "cloud_bot": 7800,
-      "volume": 7126
+      "volume": 7133,
+      "market_cap": 430
     },
     {
       "code": "002787",
@@ -831,7 +913,8 @@
       "change": 2.02,
       "cloud_top": 8060,
       "cloud_bot": 7805,
-      "volume": 12
+      "volume": 12,
+      "market_cap": 23
     }
   ],
   "sell": [
@@ -843,7 +926,8 @@
       "change": -18.3,
       "cloud_top": 274,
       "cloud_bot": 219,
-      "volume": 11846493
+      "volume": 12043682,
+      "market_cap": 254
     },
     {
       "code": "006340",
@@ -853,7 +937,8 @@
       "change": -1.1,
       "cloud_top": 5690,
       "cloud_bot": 5462,
-      "volume": 3418140
+      "volume": 3445820,
+      "market_cap": 4242
     },
     {
       "code": "056090",
@@ -863,7 +948,8 @@
       "change": -5.98,
       "cloud_top": 2609,
       "cloud_bot": 2214,
-      "volume": 2106001
+      "volume": 2111784,
+      "market_cap": 2111
     },
     {
       "code": "003310",
@@ -873,7 +959,8 @@
       "change": -3.33,
       "cloud_top": 4366,
       "cloud_bot": 4135,
-      "volume": 1452851
+      "volume": 1474656,
+      "market_cap": 1334
     },
     {
       "code": "452260",
@@ -883,7 +970,8 @@
       "change": -4.06,
       "cloud_top": 2983,
       "cloud_bot": 2431,
-      "volume": 1318416
+      "volume": 1341528,
+      "market_cap": 4584
     },
     {
       "code": "034830",
@@ -893,7 +981,8 @@
       "change": -2.16,
       "cloud_top": 1584,
       "cloud_bot": 1503,
-      "volume": 1008913
+      "volume": 1009646,
+      "market_cap": 3767
     },
     {
       "code": "010660",
@@ -903,7 +992,8 @@
       "change": -6.04,
       "cloud_top": 5912,
       "cloud_bot": 5415,
-      "volume": 892256
+      "volume": 896136,
+      "market_cap": 1163
     },
     {
       "code": "089030",
@@ -913,7 +1003,8 @@
       "change": 0.0,
       "cloud_top": 56637,
       "cloud_bot": 54525,
-      "volume": 791458
+      "volume": 798134,
+      "market_cap": 19638
     },
     {
       "code": "004020",
@@ -923,7 +1014,8 @@
       "change": -4.7,
       "cloud_top": 40962,
       "cloud_bot": 39550,
-      "volume": 752861
+      "volume": 752861,
+      "market_cap": 51376
     },
     {
       "code": "005380",
@@ -933,7 +1025,8 @@
       "change": -2.25,
       "cloud_top": 580875,
       "cloud_bot": 482750,
-      "volume": 636025
+      "volume": 637565,
+      "market_cap": 979765
     },
     {
       "code": "002310",
@@ -943,7 +1036,8 @@
       "change": -2.13,
       "cloud_top": 9710,
       "cloud_bot": 9365,
-      "volume": 506440
+      "volume": 521975,
+      "market_cap": 3716
     },
     {
       "code": "323410",
@@ -953,7 +1047,8 @@
       "change": -1.19,
       "cloud_top": 25700,
       "cloud_bot": 25225,
-      "volume": 491152
+      "volume": 491152,
+      "market_cap": 119039
     },
     {
       "code": "028260",
@@ -963,7 +1058,8 @@
       "change": -4.3,
       "cloud_top": 314250,
       "cloud_bot": 299000,
-      "volume": 395949
+      "volume": 395949,
+      "market_cap": 469479
     },
     {
       "code": "247540",
@@ -973,7 +1069,8 @@
       "change": -1.24,
       "cloud_top": 204050,
       "cloud_bot": 199600,
-      "volume": 286581
+      "volume": 286581,
+      "market_cap": 194682
     },
     {
       "code": "005490",
@@ -983,7 +1080,8 @@
       "change": -2.44,
       "cloud_top": 372750,
       "cloud_bot": 361250,
-      "volume": 284457
+      "volume": 284457,
+      "market_cap": 285269
     },
     {
       "code": "226950",
@@ -993,7 +1091,8 @@
       "change": -1.82,
       "cloud_top": 169975,
       "cloud_bot": 164400,
-      "volume": 267839
+      "volume": 267839,
+      "market_cap": 32846
     },
     {
       "code": "041960",
@@ -1003,7 +1102,8 @@
       "change": -2.38,
       "cloud_top": 8547,
       "cloud_bot": 8235,
-      "volume": 233500
+      "volume": 234392,
+      "market_cap": 6066
     },
     {
       "code": "074430",
@@ -1013,7 +1113,8 @@
       "change": -2.98,
       "cloud_top": 1506,
       "cloud_bot": 1420,
-      "volume": 184204
+      "volume": 184345,
+      "market_cap": 1229
     },
     {
       "code": "024900",
@@ -1023,7 +1124,8 @@
       "change": -4.42,
       "cloud_top": 2159,
       "cloud_bot": 2084,
-      "volume": 177287
+      "volume": 177317,
+      "market_cap": 669
     },
     {
       "code": "095720",
@@ -1033,7 +1135,8 @@
       "change": -2.23,
       "cloud_top": 1183,
       "cloud_bot": 1107,
-      "volume": 172616
+      "volume": 172630,
+      "market_cap": 1264
     },
     {
       "code": "225570",
@@ -1043,7 +1146,8 @@
       "change": -1.77,
       "cloud_top": 12190,
       "cloud_bot": 11747,
-      "volume": 166604
+      "volume": 166604,
+      "market_cap": 7679
     },
     {
       "code": "294870",
@@ -1053,7 +1157,8 @@
       "change": -4.18,
       "cloud_top": 22422,
       "cloud_bot": 22320,
-      "volume": 166556
+      "volume": 166556,
+      "market_cap": 14367
     },
     {
       "code": "006060",
@@ -1063,27 +1168,8 @@
       "change": -2.56,
       "cloud_top": 3540,
       "cloud_bot": 3500,
-      "volume": 157152
-    },
-    {
-      "code": "075580",
-      "name": "세진중공업",
-      "market": "KOSPI",
-      "close": 17350,
-      "change": -2.69,
-      "cloud_top": 17805,
-      "cloud_bot": 17805,
-      "volume": 154943
-    },
-    {
-      "code": "338840",
-      "name": "와이바이오로직스",
-      "market": "KOSDAQ",
-      "close": 23850,
-      "change": -6.29,
-      "cloud_top": 24325,
-      "cloud_bot": 24325,
-      "volume": 154715
+      "volume": 157156,
+      "market_cap": 1897
     },
     {
       "code": "382150",
@@ -1093,7 +1179,30 @@
       "change": -1.26,
       "cloud_top": 8950,
       "cloud_bot": 7907,
-      "volume": 153378
+      "volume": 155382,
+      "market_cap": 957
+    },
+    {
+      "code": "075580",
+      "name": "세진중공업",
+      "market": "KOSPI",
+      "close": 17350,
+      "change": -2.69,
+      "cloud_top": 17805,
+      "cloud_bot": 17805,
+      "volume": 154943,
+      "market_cap": 9863
+    },
+    {
+      "code": "338840",
+      "name": "와이바이오로직스",
+      "market": "KOSDAQ",
+      "close": 23850,
+      "change": -6.29,
+      "cloud_top": 24325,
+      "cloud_bot": 24325,
+      "volume": 154715,
+      "market_cap": 3619
     },
     {
       "code": "377220",
@@ -1103,7 +1212,8 @@
       "change": -1.86,
       "cloud_top": 1469,
       "cloud_bot": 1288,
-      "volume": 139514
+      "volume": 141531,
+      "market_cap": 358
     },
     {
       "code": "051600",
@@ -1113,7 +1223,8 @@
       "change": -0.87,
       "cloud_top": 57725,
       "cloud_bot": 57350,
-      "volume": 137129
+      "volume": 137129,
+      "market_cap": 25740
     },
     {
       "code": "009180",
@@ -1123,7 +1234,8 @@
       "change": -0.78,
       "cloud_top": 3250,
       "cloud_bot": 3205,
-      "volume": 134186
+      "volume": 134389,
+      "market_cap": 896
     },
     {
       "code": "003850",
@@ -1133,7 +1245,8 @@
       "change": -1.95,
       "cloud_top": 9710,
       "cloud_bot": 9655,
-      "volume": 132377
+      "volume": 132377,
+      "market_cap": 8209
     },
     {
       "code": "005830",
@@ -1143,7 +1256,8 @@
       "change": -1.24,
       "cloud_top": 180950,
       "cloud_bot": 167300,
-      "volume": 131144
+      "volume": 131144,
+      "market_cap": 116010
     },
     {
       "code": "194370",
@@ -1153,7 +1267,8 @@
       "change": -2.05,
       "cloud_top": 13050,
       "cloud_bot": 12910,
-      "volume": 128922
+      "volume": 128922,
+      "market_cap": 3734
     },
     {
       "code": "267250",
@@ -1163,7 +1278,8 @@
       "change": -3.17,
       "cloud_top": 277500,
       "cloud_bot": 249000,
-      "volume": 115938
+      "volume": 115938,
+      "market_cap": 192743
     },
     {
       "code": "398120",
@@ -1173,7 +1289,8 @@
       "change": -4.97,
       "cloud_top": 3972,
       "cloud_bot": 3862,
-      "volume": 104824
+      "volume": 108440,
+      "market_cap": 452
     },
     {
       "code": "093640",
@@ -1183,7 +1300,8 @@
       "change": -3.48,
       "cloud_top": 4212,
       "cloud_bot": 4212,
-      "volume": 104546
+      "volume": 104851,
+      "market_cap": 1357
     },
     {
       "code": "026150",
@@ -1193,7 +1311,8 @@
       "change": -3.68,
       "cloud_top": 6835,
       "cloud_bot": 6732,
-      "volume": 94700
+      "volume": 100555,
+      "market_cap": 1147
     },
     {
       "code": "000080",
@@ -1203,7 +1322,8 @@
       "change": -1.21,
       "cloud_top": 17625,
       "cloud_bot": 17200,
-      "volume": 88318
+      "volume": 88318,
+      "market_cap": 12055
     },
     {
       "code": "004980",
@@ -1213,7 +1333,8 @@
       "change": -2.26,
       "cloud_top": 9795,
       "cloud_bot": 9727,
-      "volume": 74091
+      "volume": 74091,
+      "market_cap": 2336
     },
     {
       "code": "026960",
@@ -1223,7 +1344,8 @@
       "change": -1.8,
       "cloud_top": 27325,
       "cloud_bot": 27325,
-      "volume": 69364
+      "volume": 69364,
+      "market_cap": 27168
     },
     {
       "code": "011420",
@@ -1233,17 +1355,8 @@
       "change": -1.16,
       "cloud_top": 1845,
       "cloud_bot": 1808,
-      "volume": 59768
-    },
-    {
-      "code": "461300",
-      "name": "아이스크림미디어",
-      "market": "KOSDAQ",
-      "close": 15260,
-      "change": -1.8,
-      "cloud_top": 16300,
-      "cloud_bot": 15482,
-      "volume": 59497
+      "volume": 59837,
+      "market_cap": 494
     },
     {
       "code": "330730",
@@ -1253,7 +1366,19 @@
       "change": -2.0,
       "cloud_top": 6050,
       "cloud_bot": 5955,
-      "volume": 59378
+      "volume": 59782,
+      "market_cap": 1071
+    },
+    {
+      "code": "461300",
+      "name": "아이스크림미디어",
+      "market": "KOSDAQ",
+      "close": 15260,
+      "change": -1.8,
+      "cloud_top": 16300,
+      "cloud_bot": 15482,
+      "volume": 59497,
+      "market_cap": 2029
     },
     {
       "code": "060570",
@@ -1263,7 +1388,8 @@
       "change": -1.78,
       "cloud_top": 1349,
       "cloud_bot": 1274,
-      "volume": 57634
+      "volume": 57634,
+      "market_cap": 940
     },
     {
       "code": "090150",
@@ -1273,7 +1399,8 @@
       "change": -0.25,
       "cloud_top": 811,
       "cloud_bot": 787,
-      "volume": 52346
+      "volume": 52426,
+      "market_cap": 329
     },
     {
       "code": "001060",
@@ -1283,7 +1410,8 @@
       "change": -2.64,
       "cloud_top": 33675,
       "cloud_bot": 32200,
-      "volume": 48566
+      "volume": 48566,
+      "market_cap": 7300
     },
     {
       "code": "000500",
@@ -1293,7 +1421,8 @@
       "change": -3.58,
       "cloud_top": 104900,
       "cloud_bot": 102400,
-      "volume": 45478
+      "volume": 45478,
+      "market_cap": 16923
     },
     {
       "code": "026040",
@@ -1303,7 +1432,8 @@
       "change": -2.55,
       "cloud_top": 3135,
       "cloud_bot": 3133,
-      "volume": 34798
+      "volume": 35348,
+      "market_cap": 505
     },
     {
       "code": "051360",
@@ -1313,7 +1443,8 @@
       "change": -2.31,
       "cloud_top": 15315,
       "cloud_bot": 15315,
-      "volume": 32696
+      "volume": 32696,
+      "market_cap": 2273
     },
     {
       "code": "089860",
@@ -1323,7 +1454,8 @@
       "change": -2.31,
       "cloud_top": 32450,
       "cloud_bot": 32100,
-      "volume": 29907
+      "volume": 29907,
+      "market_cap": 11491
     },
     {
       "code": "215200",
@@ -1333,7 +1465,8 @@
       "change": -2.13,
       "cloud_top": 46037,
       "cloud_bot": 44275,
-      "volume": 28986
+      "volume": 28986,
+      "market_cap": 4534
     },
     {
       "code": "078340",
@@ -1343,7 +1476,8 @@
       "change": -2.2,
       "cloud_top": 33750,
       "cloud_bot": 33712,
-      "volume": 28247
+      "volume": 28247,
+      "market_cap": 4026
     },
     {
       "code": "408920",
@@ -1353,7 +1487,8 @@
       "change": -1.42,
       "cloud_top": 3502,
       "cloud_bot": 3492,
-      "volume": 27374
+      "volume": 27375,
+      "market_cap": 1504
     },
     {
       "code": "104460",
@@ -1363,7 +1498,8 @@
       "change": -2.32,
       "cloud_top": 14645,
       "cloud_bot": 14455,
-      "volume": 26322
+      "volume": 26353,
+      "market_cap": 1506
     },
     {
       "code": "101530",
@@ -1373,7 +1509,8 @@
       "change": -0.6,
       "cloud_top": 6725,
       "cloud_bot": 6685,
-      "volume": 25256
+      "volume": 25256,
+      "market_cap": 1942
     },
     {
       "code": "072020",
@@ -1383,7 +1520,8 @@
       "change": -2.45,
       "cloud_top": 9405,
       "cloud_bot": 9357,
-      "volume": 22638
+      "volume": 22710,
+      "market_cap": 864
     },
     {
       "code": "016250",
@@ -1393,7 +1531,8 @@
       "change": -5.26,
       "cloud_top": 18650,
       "cloud_bot": 17800,
-      "volume": 21119
+      "volume": 21119,
+      "market_cap": 870
     },
     {
       "code": "025540",
@@ -1403,7 +1542,8 @@
       "change": -2.12,
       "cloud_top": 74850,
       "cloud_bot": 74700,
-      "volume": 18185
+      "volume": 18185,
+      "market_cap": 7485
     },
     {
       "code": "043370",
@@ -1413,7 +1553,8 @@
       "change": -0.39,
       "cloud_top": 13295,
       "cloud_bot": 12655,
-      "volume": 16529
+      "volume": 16529,
+      "market_cap": 2656
     },
     {
       "code": "131220",
@@ -1423,7 +1564,8 @@
       "change": -1.53,
       "cloud_top": 4540,
       "cloud_bot": 4540,
-      "volume": 15495
+      "volume": 15565,
+      "market_cap": 336
     },
     {
       "code": "078935",
@@ -1433,7 +1575,8 @@
       "change": -0.36,
       "cloud_top": 56650,
       "cloud_bot": 55250,
-      "volume": 15405
+      "volume": 15409,
+      "market_cap": 985
     },
     {
       "code": "178780",
@@ -1443,7 +1586,8 @@
       "change": -4.53,
       "cloud_top": 2815,
       "cloud_bot": 2618,
-      "volume": 15357
+      "volume": 15362,
+      "market_cap": 471
     },
     {
       "code": "001420",
@@ -1453,7 +1597,8 @@
       "change": -4.51,
       "cloud_top": 3240,
       "cloud_bot": 2923,
-      "volume": 7375
+      "volume": 7395,
+      "market_cap": 217
     },
     {
       "code": "021820",
@@ -1463,7 +1608,8 @@
       "change": -2.32,
       "cloud_top": 15677,
       "cloud_bot": 14505,
-      "volume": 6504
+      "volume": 6504,
+      "market_cap": 1429
     },
     {
       "code": "004970",
@@ -1473,7 +1619,8 @@
       "change": -0.41,
       "cloud_top": 9792,
       "cloud_bot": 9710,
-      "volume": 5471
+      "volume": 5471,
+      "market_cap": 1547
     },
     {
       "code": "093380",
@@ -1483,7 +1630,8 @@
       "change": -1.45,
       "cloud_top": 2717,
       "cloud_bot": 2717,
-      "volume": 4971
+      "volume": 4971,
+      "market_cap": 268
     },
     {
       "code": "005820",
@@ -1493,7 +1641,8 @@
       "change": -1.81,
       "cloud_top": 15852,
       "cloud_bot": 15360,
-      "volume": 3112
+      "volume": 3112,
+      "market_cap": 348
     },
     {
       "code": "467930",
@@ -1503,7 +1652,8 @@
       "change": -0.89,
       "cloud_top": 2237,
       "cloud_bot": 2227,
-      "volume": 3014
+      "volume": 3014,
+      "market_cap": 93
     },
     {
       "code": "466690",
@@ -1513,7 +1663,8 @@
       "change": -0.73,
       "cloud_top": 2051,
       "cloud_bot": 2040,
-      "volume": 2054
+      "volume": 2054,
+      "market_cap": 103
     },
     {
       "code": "003240",
@@ -1523,7 +1674,8 @@
       "change": -1.28,
       "cloud_top": 1282750,
       "cloud_bot": 1171000,
-      "volume": 1556
+      "volume": 1556,
+      "market_cap": 12904
     },
     {
       "code": "498390",
@@ -1533,7 +1685,8 @@
       "change": -0.49,
       "cloud_top": 2033,
       "cloud_bot": 2025,
-      "volume": 1262
+      "volume": 1262,
+      "market_cap": 100
     },
     {
       "code": "005745",
@@ -1543,7 +1696,8 @@
       "change": -4.12,
       "cloud_top": 7730,
       "cloud_bot": 7480,
-      "volume": 574
+      "volume": 662,
+      "market_cap": 43
     },
     {
       "code": "472230",
@@ -1553,7 +1707,8 @@
       "change": -0.24,
       "cloud_top": 2067,
       "cloud_bot": 2060,
-      "volume": 220
+      "volume": 220,
+      "market_cap": 85
     },
     {
       "code": "090355",
@@ -1563,7 +1718,8 @@
       "change": -0.62,
       "cloud_top": 13755,
       "cloud_bot": 12880,
-      "volume": 53
+      "volume": 54,
+      "market_cap": 59
     }
   ]
 }
