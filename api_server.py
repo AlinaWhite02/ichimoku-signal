@@ -193,6 +193,7 @@ async def get_signals(date: str = None):
     ]}
 
 
+@app.get("/api/scan")
 @app.post("/api/scan")
 async def trigger_scan(background_tasks: BackgroundTasks, date: str = None):
     """수동 스캔 실행 (백그라운드)."""
