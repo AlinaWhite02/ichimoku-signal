@@ -420,6 +420,7 @@ function render(stock, report, date) {
           <div class="stock-price mono">${fmt(stock.close)}원</div>
           <div class="stock-change ${stock.change > 0 ? 'up' : 'down'} mono">${fmtChange(stock.change)}</div>
           <div style="font-size:11px;color:var(--text-muted);margin-top:4px">${date || ''} 종가 기준</div>
+          ${stock.market_cap ? '<div style="font-size:13px;color:var(--text-dim);margin-top:6px">시가총액 ' + (stock.market_cap >= 10000 ? (stock.market_cap/10000).toFixed(1) + '조원' : stock.market_cap.toLocaleString() + '억원') + '</div>' : ''}
         </div>
         ` : ''}
       </div>
