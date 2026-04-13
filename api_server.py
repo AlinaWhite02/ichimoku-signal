@@ -251,6 +251,13 @@ async def serve_index():
         return FileResponse(index_path)
     return {"message": "index.html 파일을 같은 폴더에 넣어주세요."}
 
+@app.get("/stock.html")
+async def serve_stock():
+    """종목 상세 페이지."""
+    stock_path = Path(__file__).parent / "stock.html"
+    if stock_path.exists():
+        return FileResponse(stock_path)
+    return {"message": "stock.html 파일을 같은 폴더에 넣어주세요."}
 
 # ── 실행 ──────────────────────────────────────────────────────────
 
