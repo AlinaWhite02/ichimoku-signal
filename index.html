@@ -216,7 +216,7 @@ async function loadData() {
 
   // 2) 같은 폴더의 latest.json 시도
   try {
-    const res = await fetch('./data/latest.json');
+    const res = await fetch('https://raw.githubusercontent.com/AlinaWhite02/ichimoku-signal/main/data/latest.json');
     if (res.ok) {
       const json = await res.json();
       if (json.buy) { state.data = json; render(); return; }
