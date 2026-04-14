@@ -134,10 +134,13 @@ function render(data) {
 
   const buy = data.summary.buy;
   const sell = data.summary.sell;
+  const entry = data.summary.entry || {total_signals: 0, stats: {}};
   const buyD1 = buy.stats.d1 || {};
   const buyD5 = buy.stats.d5 || {};
   const sellD1 = sell.stats.d1 || {};
   const sellD5 = sell.stats.d5 || {};
+  const entryD1 = entry.stats.d1 || {};
+  const entryD5 = entry.stats.d5 || {};
 
   const periods = [
     { key: "d1", label: "1일 후" },
@@ -237,18 +240,36 @@ function render(data) {
         <div class="stat-value mono" style="color:var(--sell)">${sellD5.win_rate || 0}%</div>
         <div class="stat-sub">평균 수익률 ${fmtPct(sellD5.avg_return || 0)}</div>
       </div>
+      ${entry.total_signals > 0 ? `
+      <div class="stat-card" style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2)">
+        <div class="stat-label">초입 시그널 1일 후 승률</div>
+        <div class="stat-value mono" style="color:var(--accent)">${entryD1.win_rate || 0}%</div>
+        <div class="stat-sub">총 ${entry.total_signals}건 중 ${entryD1.count || 0}건 분석</div>
+      </div>
+      <div class="stat-card" style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2)">
+        <div class="stat-label">초입 시그널 5일 후 승률</div>
+        <div class="stat-value mono" style="color:var(--accent)">${entryD5.win_rate || 0}%</div>
+        <div class="stat-sub">평균 수익률 ${fmtPct(entryD5.avg_return || 0)}</div>
+      </div>
+      ` : ''}
     </div>
 
     <div class="section">
-      <div class="section-title">📊 승률 비교 (1일 후 기준)</div>
+      <div class="section-title">📊 승률 비교 (5일 후 기준)</div>
       <div style="display:grid;gap:12px;margin-top:12px">
         <div>
-          <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">매수 시그널 → 다음날 상승 적중률</div>
-          ${winRateBar(buyD1.win_rate || 0, 'var(--buy)')}
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">구름 상단 돌파 → 5일 후 상승 적중률</div>
+          ${winRateBar(buyD5.win_rate || 0, 'var(--buy)')}
         </div>
+        ${entry.total_signals > 0 ? `
         <div>
-          <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">매도 시그널 → 다음날 하락 적중률</div>
-          ${winRateBar(sellD1.win_rate || 0, 'var(--sell)')}
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">초입 시그널 (거래량+골든크로스) → 5일 후 상승 적중률</div>
+          ${winRateBar(entryD5.win_rate || 0, 'var(--accent)')}
+        </div>
+        ` : ''}
+        <div>
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">구름 하단 이탈 → 5일 후 하락 적중률</div>
+          ${winRateBar(sellD5.win_rate || 0, 'var(--sell)')}
         </div>
       </div>
     </div>
@@ -256,8 +277,10 @@ function render(data) {
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('buy-stats')">매수 상세</button>
       <button class="tab-btn" onclick="switchTab('sell-stats')">매도 상세</button>
-      <button class="tab-btn" onclick="switchTab('buy-recent')">최근 매수 시그널</button>
-      <button class="tab-btn" onclick="switchTab('sell-recent')">최근 매도 시그널</button>
+      ${entry.total_signals > 0 ? '<button class="tab-btn" onclick="switchTab(\'entry-stats\')">초입 상세</button>' : ''}
+      <button class="tab-btn" onclick="switchTab('buy-recent')">최근 매수</button>
+      <button class="tab-btn" onclick="switchTab('sell-recent')">최근 매도</button>
+      ${entry.total_signals > 0 ? '<button class="tab-btn" onclick="switchTab(\'entry-recent\')">최근 초입</button>' : ''}
     </div>
 
     <div class="tab-content active" id="tab-buy-stats">
@@ -274,6 +297,15 @@ function render(data) {
       </div>
     </div>
 
+    ${entry.total_signals > 0 ? `
+    <div class="tab-content" id="tab-entry-stats">
+      <div class="section">
+        <div class="section-title">🔵 초입 시그널 성과 (거래량 급증 + 골든크로스 후)</div>
+        ${statsTable(entry.stats, 'entry')}
+      </div>
+    </div>
+    ` : ''}
+
     <div class="tab-content" id="tab-buy-recent">
       <div class="section">
         <div class="section-title">🟢 최근 매수 시그널 이력</div>
@@ -287,6 +319,15 @@ function render(data) {
         ${recentTable(data.recent_sell)}
       </div>
     </div>
+
+    ${entry.total_signals > 0 ? `
+    <div class="tab-content" id="tab-entry-recent">
+      <div class="section">
+        <div class="section-title">🔵 최근 초입 시그널 이력</div>
+        ${recentTable(data.recent_entry)}
+      </div>
+    </div>
+    ` : ''}
 
     <div class="footer">
       ※ 과거 성과가 미래 수익을 보장하지 않습니다. 본 자료는 기술적 지표 참고용이며, 투자 판단은 본인 책임입니다.
