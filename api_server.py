@@ -193,7 +193,6 @@ async def get_signals(date: str = None):
     ]}
 
 
-@app.get("/api/scan")
 @app.post("/api/scan")
 async def trigger_scan(background_tasks: BackgroundTasks, date: str = None):
     """수동 스캔 실행 (백그라운드)."""
@@ -251,6 +250,7 @@ async def serve_index():
         return FileResponse(index_path)
     return {"message": "index.html 파일을 같은 폴더에 넣어주세요."}
 
+
 @app.get("/stock.html")
 async def serve_stock():
     """종목 상세 페이지."""
@@ -258,6 +258,25 @@ async def serve_stock():
     if stock_path.exists():
         return FileResponse(stock_path)
     return {"message": "stock.html 파일을 같은 폴더에 넣어주세요."}
+
+
+@app.get("/backtest.html")
+async def serve_backtest():
+    """시그널 성과 분석 페이지."""
+    bt_path = Path(__file__).parent / "backtest.html"
+    if bt_path.exists():
+        return FileResponse(bt_path)
+    return {"message": "backtest.html 파일을 같은 폴더에 넣어주세요."}
+
+
+@app.get("/data/{filepath:path}")
+async def serve_data(filepath: str):
+    """data 폴더 내 JSON 파일 서빙."""
+    file_path = Path(__file__).parent / "data" / filepath
+    if file_path.exists() and file_path.suffix == ".json":
+        return FileResponse(file_path, media_type="application/json")
+    return {"error": "파일 없음"}
+
 
 # ── 실행 ──────────────────────────────────────────────────────────
 
@@ -272,5 +291,4 @@ if __name__ == "__main__":
     print("  ╚══════════════════════════════════════════════╝")
     print()
 
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
