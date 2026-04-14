@@ -94,6 +94,72 @@ def detect_signal(df: pd.DataFrame) -> str | None:
     return None
 
 
+def detect_entry_signal(df: pd.DataFrame) -> dict | None:
+    """
+    초입 시그널: 거래량 급증 + 이동평균선 골든크로스.
+    조건:
+      1) 당일 거래량 >= 20일 평균 거래량의 2배
+      2) 전일 5일선 <= 20일선, 당일 5일선 > 20일선 (골든크로스)
+    추가 정보:
+      - 거래량 배율 (volume_ratio)
+      - 5일/20일/60일 이동평균선 값
+      - 구름대 위치 (보조 참고용)
+    """
+    if len(df) < 61:
+        return None
+
+    # 이동평균선 계산
+    df = df.copy()
+    df["ma5"] = df["종가"].rolling(5).mean()
+    df["ma20"] = df["종가"].rolling(20).mean()
+    df["ma60"] = df["종가"].rolling(60).mean()
+    df["vol_ma20"] = df["거래량"].rolling(20).mean()
+
+    today = df.iloc[-1]
+    yesterday = df.iloc[-2]
+
+    # 이동평균 값 체크
+    if pd.isna(today["ma5"]) or pd.isna(today["ma20"]) or pd.isna(today["vol_ma20"]):
+        return None
+    if pd.isna(yesterday["ma5"]) or pd.isna(yesterday["ma20"]):
+        return None
+    if today["vol_ma20"] == 0:
+        return None
+
+    # 조건 1: 거래량 급증 (20일 평균의 2배 이상)
+    volume_ratio = today["거래량"] / today["vol_ma20"]
+    if volume_ratio < 2.0:
+        return None
+
+    # 조건 2: 5일선이 20일선 골든크로스
+    if not (yesterday["ma5"] <= yesterday["ma20"] and today["ma5"] > today["ma20"]):
+        return None
+
+    # 구름대 위치 (보조)
+    cloud_pos = "N/A"
+    if not pd.isna(today.get("cloud_top")) and not pd.isna(today.get("cloud_bot")):
+        if today["종가"] > today["cloud_top"]:
+            cloud_pos = "구름 위"
+        elif today["종가"] < today["cloud_bot"]:
+            cloud_pos = "구름 아래"
+        else:
+            cloud_pos = "구름 안"
+
+    # 정배열 여부 (5일 > 20일 > 60일)
+    aligned = False
+    if not pd.isna(today["ma60"]):
+        aligned = today["ma5"] > today["ma20"] > today["ma60"]
+
+    return {
+        "volume_ratio": round(volume_ratio, 1),
+        "ma5": round(today["ma5"]),
+        "ma20": round(today["ma20"]),
+        "ma60": round(today["ma60"]) if not pd.isna(today["ma60"]) else None,
+        "cloud_pos": cloud_pos,
+        "aligned": aligned,
+    }
+
+
 # ═══════════════════════════════════════════════════════════════════
 # 3. 전종목 스캔
 # ═══════════════════════════════════════════════════════════════════
@@ -132,7 +198,16 @@ def get_all_tickers(date_str: str) -> list[tuple[str, str, str]]:
                 name = str(row[name_col]).strip()
                 # 6자리 숫자 종목코드만 (ETF, ETN 등 제외)
                 if len(code) == 6 and code.isdigit():
-                    tickers.append((code, name, market))
+                    # 시가총액 (억원 단위)
+                    mcap = None
+                    for mcap_col in ["Marcap", "MarCap", "Market Cap"]:
+                        if mcap_col in df.columns:
+                            try:
+                                mcap = int(row[mcap_col] / 100000000)
+                            except Exception:
+                                pass
+                            break
+                    tickers.append((code, name, market, mcap))
 
         except Exception as e:
             print(f"  ⚠ {market} 종목 목록 조회 실패: {e}")
@@ -174,7 +249,7 @@ def scan_all(target_date: str, progress: bool = True) -> pd.DataFrame:
     results = []
     errors = []
 
-    for idx, (ticker, name, market) in enumerate(tickers, 1):
+    for idx, (ticker, name, market, mcap) in enumerate(tickers, 1):
         if progress and idx % 50 == 0:
             pct = idx / total * 100
             print(f"  [{idx:>4}/{total}] {pct:5.1f}% 처리 중... (현재: {name})")
@@ -186,13 +261,13 @@ def scan_all(target_date: str, progress: bool = True) -> pd.DataFrame:
                 continue  # 데이터 부족 (신규 상장 등)
 
             df = ichimoku_cloud(df)
+            today = df.iloc[-1]
+            yesterday = df.iloc[-2]
+            change_pct = (today["종가"] / yesterday["종가"] - 1) * 100
+
+            # 구름대 시그널
             signal = detect_signal(df)
-
             if signal:
-                today = df.iloc[-1]
-                yesterday = df.iloc[-2]
-                change_pct = (today["종가"] / yesterday["종가"] - 1) * 100
-
                 results.append({
                     "시그널": signal,
                     "종목코드": ticker,
@@ -203,6 +278,29 @@ def scan_all(target_date: str, progress: bool = True) -> pd.DataFrame:
                     "구름상단": int(today["cloud_top"]),
                     "구름하단": int(today["cloud_bot"]),
                     "거래량": int(today["거래량"]),
+                    "시가총액": mcap,
+                })
+
+            # 초입 시그널 (거래량 급증 + 골든크로스)
+            entry = detect_entry_signal(df)
+            if entry:
+                results.append({
+                    "시그널": "ENTRY",
+                    "종목코드": ticker,
+                    "종목명": name,
+                    "시장": market,
+                    "종가": int(today["종가"]),
+                    "전일대비(%)": round(change_pct, 2),
+                    "구름상단": int(today["cloud_top"]) if not pd.isna(today.get("cloud_top")) else 0,
+                    "구름하단": int(today["cloud_bot"]) if not pd.isna(today.get("cloud_bot")) else 0,
+                    "거래량": int(today["거래량"]),
+                    "시가총액": mcap,
+                    "거래량배율": entry["volume_ratio"],
+                    "MA5": entry["ma5"],
+                    "MA20": entry["ma20"],
+                    "MA60": entry["ma60"],
+                    "구름위치": entry["cloud_pos"],
+                    "정배열": entry["aligned"],
                 })
 
             # pykrx rate limit 방지
@@ -284,6 +382,24 @@ def print_results(df: pd.DataFrame, target_date: str):
 
     print()
     print(f"  합계: 매수 {len(buys)}건 / 매도 {len(sells)}건")
+
+    # 초입 시그널
+    entries = df[df["시그널"] == "ENTRY"].copy() if "ENTRY" in df["시그널"].values else pd.DataFrame()
+    if not entries.empty:
+        print(f"\n  🔵 초입 시그널 (거래량 급증 + 골든크로스) — {len(entries)}건")
+        print("  " + "─" * 66)
+        entry_cols = ["종목코드", "종목명", "시장", "종가", "전일대비(%)", "거래량배율", "구름위치", "정배열"]
+        display_df = entries[[c for c in entry_cols if c in entries.columns]].copy()
+        display_df["종가"] = entries["종가"].apply(lambda x: f"{x:,}")
+        display_df["전일대비(%)"] = entries["전일대비(%)"].apply(lambda x: f"+{x:.2f}%" if x > 0 else f"{x:.2f}%")
+        display_df["거래량배율"] = entries["거래량배율"].apply(lambda x: f"{x:.1f}배")
+        display_df["정배열"] = entries["정배열"].apply(lambda x: "✓" if x else "✗")
+        if use_tabulate:
+            print(tabulate(display_df, headers="keys", tablefmt="simple", showindex=False, stralign="right"))
+        else:
+            print(display_df.to_string(index=False))
+        print(f"\n  합계: 초입 시그널 {len(entries)}건")
+
     print("=" * 70)
     print("  ※ 본 자료는 기술적 지표 참고용이며, 투자 판단은 본인 책임입니다.")
     print("=" * 70)
@@ -376,14 +492,24 @@ def main():
         json_path = Path(args.json)
         buys = result_df[result_df["시그널"] == "BUY"].to_dict("records")
         sells = result_df[result_df["시그널"] == "SELL"].to_dict("records")
+        entries = result_df[result_df["시그널"] == "ENTRY"].to_dict("records") if "ENTRY" in result_df["시그널"].values else []
 
         def remap(row):
-            return {
+            base = {
                 "code": row["종목코드"], "name": row["종목명"], "market": row["시장"],
                 "close": row["종가"], "change": row["전일대비(%)"],
                 "cloud_top": row["구름상단"], "cloud_bot": row["구름하단"],
-                "volume": row["거래량"],
+                "volume": row["거래량"], "market_cap": row.get("시가총액"),
             }
+            # 초입 시그널 추가 정보
+            if row.get("거래량배율"):
+                base["volume_ratio"] = row["거래량배율"]
+                base["ma5"] = row.get("MA5")
+                base["ma20"] = row.get("MA20")
+                base["ma60"] = row.get("MA60")
+                base["cloud_pos"] = row.get("구름위치")
+                base["aligned"] = row.get("정배열")
+            return base
 
         import json
         json_data = {
@@ -392,6 +518,7 @@ def main():
             "total_scanned": len(get_all_tickers(target_date)),
             "buy": [remap(r) for r in buys],
             "sell": [remap(r) for r in sells],
+            "entry": [remap(r) for r in entries],
         }
         json_path.parent.mkdir(parents=True, exist_ok=True)
         with open(json_path, "w", encoding="utf-8") as f:
