@@ -464,14 +464,24 @@ async function init() {
   const { stock, date } = await loadStockData(stockCode);
   const report = await loadReport(stockCode);
 
+  // 시그널에도 없고 리포트도 없으면 → 종목명이라도 찾아서 기본 페이지 표시
   if (!stock && !report) {
-    document.getElementById('app').innerHTML = `
-      <nav class="back-nav"><a href="/">← 대시보드로 돌아가기</a></nav>
-      <div class="empty-state" style="padding:80px 20px">
-        <div class="empty-state-icon">🔍</div>
-        <div class="empty-state-title">종목 정보를 찾을 수 없습니다</div>
-        <div class="empty-state-desc">종목코드: ${stockCode}<br>시그널 데이터에 포함되지 않은 종목이거나, 스캔 데이터가 없습니다.</div>
-      </div>`;
+    let stockName = stockCode;
+    try {
+      const urls = ['/data/stocklist.json','./data/stocklist.json','https://raw.githubusercontent.com/AlinaWhite02/ichimoku-signal/main/data/stocklist.json'];
+      for (const url of urls) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) {
+            const list = await res.json();
+            const found = list.find(s => s.code === stockCode);
+            if (found) { stockName = found.name; break; }
+          }
+        } catch(e) {}
+      }
+    } catch(e) {}
+
+    render(null, { name: stockName, summary: null, sections: [] }, null);
     return;
   }
 
