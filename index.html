@@ -100,6 +100,7 @@ body {
 }
 .tab-btn.active-buy { background: rgba(16,185,129,0.08); border-bottom-color: var(--buy); color: var(--buy); font-weight: 700; }
 .tab-btn.active-sell { background: rgba(239,68,68,0.08); border-bottom-color: var(--sell); color: var(--sell); font-weight: 700; }
+.tab-btn.active-entry { background: rgba(59,130,246,0.08); border-bottom-color: var(--accent); color: var(--accent); font-weight: 700; }
 .market-btn {
   background: transparent; border: 1px solid var(--border);
   color: var(--text-dim); padding: 5px 12px; border-radius: 4px;
@@ -257,25 +258,30 @@ function render() {
 
   const buyCount = d.buy.length;
   const sellCount = d.sell.length;
+  const entryCount = (d.entry || []).length;
   const kospiB = d.buy.filter(r=>r.market==='KOSPI').length;
   const kosdaqB = d.buy.filter(r=>r.market==='KOSDAQ').length;
   const kospiS = d.sell.filter(r=>r.market==='KOSPI').length;
   const kosdaqS = d.sell.filter(r=>r.market==='KOSDAQ').length;
+  const kospiE = (d.entry||[]).filter(r=>r.market==='KOSPI').length;
+  const kosdaqE = (d.entry||[]).filter(r=>r.market==='KOSDAQ').length;
   const avgBuy = buyCount ? (d.buy.reduce((s,r)=>s+r.change,0)/buyCount).toFixed(1) : '0';
   const avgSell = sellCount ? (d.sell.reduce((s,r)=>s+r.change,0)/sellCount).toFixed(1) : '0';
 
   // Filter & sort
-  let rows = state.tab === 'buy' ? [...d.buy] : [...d.sell];
+  let rows = state.tab === 'buy' ? [...d.buy] : state.tab === 'sell' ? [...d.sell] : [...(d.entry || [])];
   if (state.market !== 'ALL') rows = rows.filter(r => r.market === state.market);
   if (state.search) {
     const q = state.search.toLowerCase();
     rows = rows.filter(r => r.name.toLowerCase().includes(q) || r.code.includes(q));
   }
-  rows.sort((a,b) => state.sortAsc ? a[state.sortKey]-b[state.sortKey] : b[state.sortKey]-a[state.sortKey]);
+  const sk = state.tab === 'entry' && state.sortKey === 'cloud_top' ? 'volume_ratio' : state.sortKey;
+  rows.sort((a,b) => state.sortAsc ? (a[sk]||0)-(b[sk]||0) : (b[sk]||0)-(a[sk]||0));
 
-  const isBuy = state.tab === 'buy';
+  const isEntry = state.tab === 'entry';
   const tabBuyClass = state.tab==='buy' ? 'active-buy' : '';
   const tabSellClass = state.tab==='sell' ? 'active-sell' : '';
+  const tabEntryClass = state.tab==='entry' ? 'active-entry' : '';
 
   app.innerHTML = `
     <header class="header">
@@ -314,12 +320,18 @@ function render() {
         <div class="stat-value sell mono">${avgSell}%</div>
         <div class="stat-sub">전일 대비</div>
       </div>
+      ${entryCount > 0 ? `<div class="stat-card" style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2)">
+        <div class="stat-label">초입 시그널</div>
+        <div class="stat-value mono" style="color:var(--accent)">${entryCount}</div>
+        <div class="stat-sub">거래량 급증 + 골든크로스</div>
+      </div>` : ''}
     </div>
 
     <div class="controls">
       <div class="tab-group">
         <button class="tab-btn ${tabBuyClass}" onclick="setTab('buy')">매수 ${buyCount}</button>
         <button class="tab-btn ${tabSellClass}" onclick="setTab('sell')">매도 ${sellCount}</button>
+        ${entryCount > 0 ? `<button class="tab-btn ${tabEntryClass}" onclick="setTab('entry')">초입 ${entryCount}</button>` : ''}
       </div>
       <button class="market-btn ${state.market==='ALL'?'active':''}" onclick="setMarket('ALL')">ALL</button>
       <button class="market-btn ${state.market==='KOSPI'?'active':''}" onclick="setMarket('KOSPI')">KOSPI</button>
@@ -335,8 +347,14 @@ function render() {
               <th>종목</th>
               <th class="${state.sortKey==='close'?'sorted':''}" onclick="setSort('close')">종가 ${state.sortKey==='close'?(state.sortAsc?'↑':'↓'):''}</th>
               <th class="${state.sortKey==='change'?'sorted':''}" onclick="setSort('change')">등락 ${state.sortKey==='change'?(state.sortAsc?'↑':'↓'):''}</th>
+              ${isEntry ? `
+              <th class="${state.sortKey==='volume_ratio'?'sorted':''}" onclick="setSort('volume_ratio')">거래량배율 ${state.sortKey==='volume_ratio'?(state.sortAsc?'↑':'↓'):''}</th>
+              <th>구름위치</th>
+              <th>정배열</th>
+              ` : `
               <th class="${state.sortKey==='cloud_top'?'sorted':''}" onclick="setSort('cloud_top')">구름상단 ${state.sortKey==='cloud_top'?(state.sortAsc?'↑':'↓'):''}</th>
               <th class="${state.sortKey==='cloud_bot'?'sorted':''}" onclick="setSort('cloud_bot')">구름하단 ${state.sortKey==='cloud_bot'?(state.sortAsc?'↑':'↓'):''}</th>
+              `}
               <th class="${state.sortKey==='volume'?'sorted':''}" onclick="setSort('volume')">거래량 ${state.sortKey==='volume'?(state.sortAsc?'↑':'↓'):''}</th>
             </tr>
           </thead>
@@ -358,10 +376,17 @@ function render() {
                 </td>
                 <td class="mono" style="font-weight:600">${fmt(r.close)}</td>
                 <td class="mono ${changeClass}">${fmtChange(r.change)}</td>
+                ${isEntry ? `
+                <td class="mono" style="color:var(--accent);font-weight:700">${r.volume_ratio}배</td>
+                <td class="mono" style="color:${r.cloud_pos==='구름 위'?'var(--buy)':r.cloud_pos==='구름 아래'?'var(--sell)':'var(--text-dim)';font-size:11px">${r.cloud_pos||'—'}</td>
+                <td class="mono" style="color:${r.aligned?'var(--buy)':'var(--text-muted)'}">${r.aligned?'정배열':'—'}</td>
+                ` : `
                 <td class="mono" style="color:var(--text-dim)">${fmt(r.cloud_top)}</td>
                 <td class="mono" style="color:var(--text-dim)">${fmt(r.cloud_bot)}</td>
+                `}
                 <td class="mono" style="color:var(--text-dim)">${fmtVol(r.volume)}</td>
               </tr>`;
+            }).join('')}
             }).join('')}
           </tbody>
         </table>
@@ -371,7 +396,7 @@ function render() {
 
     <div class="footer">
       <div class="footer-text">
-        구름대 상단 돌파 = 매수 시그널 · 구름대 하단 이탈 = 매도 시그널<br>
+        구름대 상단 돌파 = 매수 시그널 · 구름대 하단 이탈 = 매도 시그널 · 거래량 급증 + 골든크로스 = 초입 시그널<br>
         ※ 본 자료는 기술적 지표 참고용이며, 투자 판단은 본인 책임입니다.
       </div>
       <div class="footer-text mono">Powered by 밸류파인더</div>
