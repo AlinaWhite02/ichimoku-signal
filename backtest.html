@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시그널 성과 분석 — 일목균형표</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06080e; --surface: #0d1017; --card: #111620; --border: #1a1f2e;
+  --text: #e2e5eb; --text-dim: #6b7280; --text-muted: #444c5c;
+  --buy: #10b981; --sell: #ef4444; --accent: #3b82f6; --gold: #f59e0b;
+  --buy-bg: rgba(16,185,129,0.08); --sell-bg: rgba(239,68,68,0.08);
+  --buy-border: rgba(16,185,129,0.2); --sell-border: rgba(239,68,68,0.2);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+.mono { font-family: 'IBM Plex Mono', monospace; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+.back-nav { padding: 16px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.back-nav a { color: var(--text-dim); }
+
+.hero { padding: 32px 0 24px; border-bottom: 1px solid var(--border); }
+.hero-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+.hero-sub { font-size: 13px; color: var(--text-dim); }
+
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; padding: 20px 0;
+}
+.stat-card {
+  border-radius: 8px; padding: 16px;
+  border: 1px solid var(--border); background: var(--surface);
+}
+.stat-card.buy { background: var(--buy-bg); border-color: var(--buy-border); }
+.stat-card.sell { background: var(--sell-bg); border-color: var(--sell-border); }
+.stat-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.stat-value { font-size: 28px; font-weight: 800; }
+.stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+.section { padding: 24px 0; border-bottom: 1px solid var(--border); }
+.section-title { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  padding: 10px 12px; text-align: right; color: var(--text-dim);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border); text-transform: uppercase;
+}
+thead th:first-child { text-align: left; }
+tbody td { padding: 10px 12px; text-align: right; border-bottom: 1px solid rgba(26,31,46,0.5); }
+tbody td:first-child { text-align: left; color: var(--text-dim); }
+tbody tr:hover { background: var(--surface); }
+
+.bar-wrap { display: flex; align-items: center; gap: 8px; }
+.bar-bg { flex: 1; height: 20px; background: var(--surface); border-radius: 4px; overflow: hidden; position: relative; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+.bar-label { font-size: 12px; font-weight: 600; width: 50px; text-align: right; }
+
+.recent-table { margin-top: 12px; }
+.recent-table td { font-size: 12px; }
+.pos { color: var(--buy); }
+.neg { color: var(--sell); }
+
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); padding-top: 8px; }
+.tab-btn {
+  background: transparent; border: none; border-bottom: 2px solid transparent;
+  color: var(--text-dim); padding: 10px 20px; font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.tab-btn.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 700; }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.footer { padding: 20px 0; border-top: 1px solid var(--border); font-size: 10px; color: var(--text-muted); }
+
+.loading { text-align: center; padding: 80px 20px; color: var(--text-dim); }
+.spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .hero-title { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <div class="loading"><div class="spinner"></div>백테스트 데이터를 불러오는 중...</div>
+</div>
+
+<script>
+async function loadData() {
+  const urls = [
+    '/data/backtest.json',
+    './data/backtest.json',
+    'https://raw.githubusercontent.com/AlinaWhite02/ichimoku-signal/main/data/backtest.json',
+  ];
+  for (const url of urls) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.summary) return data;
+      }
+    } catch(e) {}
+  }
+  return null;
+}
+
+const fmt = (n) => n != null ? n.toLocaleString('ko-KR') : '—';
+const fmtPct = (v) => v > 0 ? `+${v.toFixed(2)}%` : `${v.toFixed(2)}%`;
+const esc = (s) => s ? s.replace(/</g,'&lt;') : '';
+
+function render(data) {
+  const app = document.getElementById('app');
+
+  if (!data) {
+    app.innerHTML = `
+      <nav class="back-nav"><a href="/">← 대시보드</a></nav>
+      <div class="loading" style="padding:80px 20px">
+        <div style="font-size:36px;margin-bottom:16px">📊</div>
+        <div>백테스트 데이터가 없습니다</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--text-muted)">
+          py -3.12 backtest.py 를 실행하세요
+        </div>
+      </div>`;
+    return;
+  }
+
+  const buy = data.summary.buy;
+  const sell = data.summary.sell;
+  const buyD1 = buy.stats.d1 || {};
+  const buyD5 = buy.stats.d5 || {};
+  const sellD1 = sell.stats.d1 || {};
+  const sellD5 = sell.stats.d5 || {};
+
+  const periods = [
+    { key: "d1", label: "1일 후" },
+    { key: "d3", label: "3일 후" },
+    { key: "d5", label: "5일 후" },
+    { key: "d10", label: "10일 후" },
+    { key: "d20", label: "20일 후" },
+  ];
+
+  function statsTable(stats, type) {
+    return `
+      <table class="mono">
+        <thead><tr>
+          <th>기간</th><th>건수</th><th>승률</th><th>평균수익</th><th>중앙값</th><th>최대이익</th><th>최대손실</th>
+        </tr></thead>
+        <tbody>
+          ${periods.map(p => {
+            const s = stats[p.key];
+            if (!s || s.count === 0) return '';
+            const winColor = s.win_rate >= 50 ? 'var(--buy)' : 'var(--sell)';
+            const avgColor = s.avg_return >= 0 ? 'var(--buy)' : 'var(--sell)';
+            return `<tr>
+              <td>${p.label}</td>
+              <td>${s.count}건</td>
+              <td style="color:${winColor};font-weight:700">${s.win_rate}%</td>
+              <td style="color:${avgColor}">${fmtPct(s.avg_return)}</td>
+              <td>${fmtPct(s.median_return)}</td>
+              <td class="pos">${fmtPct(s.max_gain)}</td>
+              <td class="neg">${fmtPct(s.max_loss)}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  function winRateBar(rate, color) {
+    return `
+      <div class="bar-wrap">
+        <div class="bar-bg">
+          <div class="bar-fill" style="width:${rate}%;background:${color}"></div>
+        </div>
+        <div class="bar-label mono" style="color:${color}">${rate}%</div>
+      </div>`;
+  }
+
+  function recentTable(signals) {
+    if (!signals || signals.length === 0) return '<div style="color:var(--text-muted);padding:20px;text-align:center">데이터 없음</div>';
+    return `
+      <table class="recent-table mono">
+        <thead><tr><th>날짜</th><th>종목</th><th>매수가</th><th>1일후</th><th>3일후</th><th>5일후</th><th>10일후</th></tr></thead>
+        <tbody>
+          ${signals.slice(0, 30).map(s => {
+            const r = s.returns || {};
+            const fmtR = (v) => v == null ? '—' : `<span class="${v>=0?'pos':'neg'}">${fmtPct(v)}</span>`;
+            return `<tr>
+              <td>${s.date}</td>
+              <td style="text-align:left"><a href="stock.html?code=${s.code}">${esc(s.name)}</a> <span style="color:var(--text-muted)">${s.code}</span></td>
+              <td>${fmt(s.price)}</td>
+              <td>${fmtR(r.d1)}</td>
+              <td>${fmtR(r.d3)}</td>
+              <td>${fmtR(r.d5)}</td>
+              <td>${fmtR(r.d10)}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  app.innerHTML = `
+    <nav class="back-nav"><a href="/">← 대시보드</a></nav>
+
+    <div class="hero">
+      <div class="hero-title">시그널 성과 분석</div>
+      <div class="hero-sub mono">
+        ${data.end_date} 기준 · 최근 ${data.lookback_days}일 · ${data.total_stocks}종목 대상 · ${data.generated} 생성
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card buy">
+        <div class="stat-label">매수 시그널 1일 후 승률</div>
+        <div class="stat-value mono" style="color:var(--buy)">${buyD1.win_rate || 0}%</div>
+        <div class="stat-sub">총 ${buy.total_signals}건 중 ${buyD1.count || 0}건 분석</div>
+      </div>
+      <div class="stat-card buy">
+        <div class="stat-label">매수 시그널 5일 후 승률</div>
+        <div class="stat-value mono" style="color:var(--buy)">${buyD5.win_rate || 0}%</div>
+        <div class="stat-sub">평균 수익률 ${fmtPct(buyD5.avg_return || 0)}</div>
+      </div>
+      <div class="stat-card sell">
+        <div class="stat-label">매도 시그널 1일 후 승률</div>
+        <div class="stat-value mono" style="color:var(--sell)">${sellD1.win_rate || 0}%</div>
+        <div class="stat-sub">총 ${sell.total_signals}건 중 ${sellD1.count || 0}건 분석</div>
+      </div>
+      <div class="stat-card sell">
+        <div class="stat-label">매도 시그널 5일 후 승률</div>
+        <div class="stat-value mono" style="color:var(--sell)">${sellD5.win_rate || 0}%</div>
+        <div class="stat-sub">평균 수익률 ${fmtPct(sellD5.avg_return || 0)}</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">📊 승률 비교 (1일 후 기준)</div>
+      <div style="display:grid;gap:12px;margin-top:12px">
+        <div>
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">매수 시그널 → 다음날 상승 확률</div>
+          ${winRateBar(buyD1.win_rate || 0, 'var(--buy)')}
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">매도 시그널 → 다음날 하락 확률</div>
+          ${winRateBar(sellD1.win_rate || 0, 'var(--sell)')}
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('buy-stats')">매수 상세</button>
+      <button class="tab-btn" onclick="switchTab('sell-stats')">매도 상세</button>
+      <button class="tab-btn" onclick="switchTab('buy-recent')">최근 매수 시그널</button>
+      <button class="tab-btn" onclick="switchTab('sell-recent')">최근 매도 시그널</button>
+    </div>
+
+    <div class="tab-content active" id="tab-buy-stats">
+      <div class="section">
+        <div class="section-title">🟢 매수 시그널 성과 (구름 상단 돌파 후)</div>
+        ${statsTable(buy.stats, 'buy')}
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-sell-stats">
+      <div class="section">
+        <div class="section-title">🔴 매도 시그널 성과 (구름 하단 이탈 후)</div>
+        ${statsTable(sell.stats, 'sell')}
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-buy-recent">
+      <div class="section">
+        <div class="section-title">🟢 최근 매수 시그널 이력</div>
+        ${recentTable(data.recent_buy)}
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-sell-recent">
+      <div class="section">
+        <div class="section-title">🔴 최근 매도 시그널 이력</div>
+        ${recentTable(data.recent_sell)}
+      </div>
+    </div>
+
+    <div class="footer">
+      ※ 과거 성과가 미래 수익을 보장하지 않습니다. 본 자료는 기술적 지표 참고용이며, 투자 판단은 본인 책임입니다.
+      <span class="mono" style="float:right">Powered by 밸류파인더</span>
+    </div>
+  `;
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + id)?.classList.add('active');
+  event.target.classList.add('active');
+}
+
+async function init() {
+  const data = await loadData();
+  render(data);
+}
+init();
+</script>
+</body>
+</html>
