@@ -422,49 +422,38 @@ function setSort(key) {
   render();
 }
 
-// ── Global Search (한글 입력 문제 없음 - app 외부 요소) ──
+// ── 전체 종목 목록 ──
+let allStocks = [];
+async function loadStockList() {
+  const urls = ['/data/stocklist.json','./data/stocklist.json','https://raw.githubusercontent.com/AlinaWhite02/ichimoku-signal/main/data/stocklist.json'];
+  for (const url of urls) {
+    try { const r = await fetch(url); if(r.ok){allStocks=await r.json();return;} } catch(e){}
+  }
+}
+loadStockList();
+
+// ── Global Search ──
 function doGlobalSearch() {
   const input = document.getElementById('globalSearch');
   const q = (input?.value || '').trim();
   if (!q) return;
-
   const resultsDiv = document.getElementById('searchResults');
 
-  // 1) 6자리 숫자면 바로 종목 상세로 이동
-  if (/^\d{6}$/.test(q)) {
-    location.href = 'stock.html?code=' + q;
-    return;
-  }
+  if (/^\d{6}$/.test(q)) { location.href = 'stock.html?code=' + q; return; }
 
-  // 2) 시그널 데이터 내에서 이름/코드 검색
-  const d = state.data;
-  if (!d) return;
-
-  const all = [...(d.buy||[]), ...(d.sell||[]), ...(d.entry||[])];
-  // 중복 제거
-  const seen = new Set();
-  const unique = all.filter(r => { if (seen.has(r.code)) return false; seen.add(r.code); return true; });
-
+  // 전체 종목 목록에서 검색
   const ql = q.toLowerCase();
-  const matches = unique.filter(r => r.name.toLowerCase().includes(ql) || r.code.includes(ql));
+  const matches = allStocks.filter(r => r.name.toLowerCase().includes(ql) || r.code.includes(ql));
 
   if (matches.length > 0) {
-    resultsDiv.innerHTML = matches.slice(0, 10).map(r =>
+    resultsDiv.innerHTML = matches.slice(0, 15).map(r =>
       `<a href="stock.html?code=${r.code}" style="display:inline-block;margin:4px 4px 4px 0;padding:4px 12px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:12px;text-decoration:none">
         ${esc(r.name)} <span class="mono" style="color:var(--text-muted)">${r.code}</span>
       </a>`
-    ).join('') + (matches.length > 10 ? `<span style="font-size:11px;color:var(--text-muted);margin-left:8px">외 ${matches.length-10}건</span>` : '');
-
-    // 시그널 내 필터도 적용
-    state.search = q;
-    render();
+    ).join('') + (matches.length > 15 ? `<span style="font-size:11px;color:var(--text-muted);margin-left:8px">외 ${matches.length-15}건</span>` : '');
+    state.search = q; render();
   } else {
-    // 시그널 데이터에 없는 경우 직접 코드 입력 안내
-    resultsDiv.innerHTML = `
-      <div style="font-size:12px;color:var(--text-dim);padding:8px 0">
-        시그널 목록에 없는 종목입니다.
-        <span style="color:var(--text-muted)">종목코드 6자리를 직접 입력하면 상세 페이지로 이동합니다.</span>
-      </div>`;
+    resultsDiv.innerHTML = '<div style="font-size:12px;color:var(--text-dim);padding:8px 0">검색 결과가 없습니다. 종목코드 6자리를 직접 입력하면 상세 페이지로 이동합니다.</div>';
   }
 }
 
@@ -472,8 +461,7 @@ function clearSearch() {
   const input = document.getElementById('globalSearch');
   if (input) input.value = '';
   document.getElementById('searchResults').innerHTML = '';
-  state.search = '';
-  render();
+  state.search = ''; render();
 }
 
 // ── Init ──
