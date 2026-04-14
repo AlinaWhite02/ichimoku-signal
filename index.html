@@ -378,7 +378,7 @@ function render() {
                 <td class="mono ${changeClass}">${fmtChange(r.change)}</td>
                 ${isEntry ? `
                 <td class="mono" style="color:var(--accent);font-weight:700">${r.volume_ratio}배</td>
-                <td class="mono" style="color:${r.cloud_pos==='구름 위'?'var(--buy)':r.cloud_pos==='구름 아래'?'var(--sell)':'var(--text-dim)';font-size:11px">${r.cloud_pos||'—'}</td>
+                <td class="mono" style="color:${r.cloud_pos==='구름 위'?'var(--buy)':r.cloud_pos==='구름 아래'?'var(--sell)':'var(--text-dim)'};font-size:11px">${r.cloud_pos||'—'}</td>
                 <td class="mono" style="color:${r.aligned?'var(--buy)':'var(--text-muted)'}">${r.aligned?'정배열':'—'}</td>
                 ` : `
                 <td class="mono" style="color:var(--text-dim)">${fmt(r.cloud_top)}</td>
