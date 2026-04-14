@@ -185,6 +185,17 @@ tbody td:first-child { text-align: left; }
 </head>
 <body>
 
+<!-- 검색 바: app 외부에 배치하여 한글 입력 문제 해결 -->
+<div id="search-bar" style="display:none; padding:8px 24px; border-bottom:1px solid var(--border); background:var(--bg);">
+  <div style="display:flex;gap:8px;align-items:center;max-width:100%">
+    <input id="globalSearch" class="search-input" type="text" placeholder="종목명 또는 종목코드로 검색 (시그널 외 종목도 검색 가능)" style="flex:1;width:auto;margin:0"
+      onkeydown="if(event.key==='Enter') doGlobalSearch()">
+    <button onclick="doGlobalSearch()" style="background:var(--accent);color:#fff;border:none;padding:7px 16px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap">검색</button>
+    <button onclick="clearSearch()" style="background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:7px 12px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap">초기화</button>
+  </div>
+  <div id="searchResults" style="margin-top:8px"></div>
+</div>
+
 <div id="app">
   <div class="loading">
     <div class="spinner"></div>
@@ -336,7 +347,6 @@ function render() {
       <button class="market-btn ${state.market==='ALL'?'active':''}" onclick="setMarket('ALL')">ALL</button>
       <button class="market-btn ${state.market==='KOSPI'?'active':''}" onclick="setMarket('KOSPI')">KOSPI</button>
       <button class="market-btn ${state.market==='KOSDAQ'?'active':''}" onclick="setMarket('KOSDAQ')">KOSDAQ</button>
-      <input class="search-input" type="text" placeholder="종목명 또는 코드 검색..." value="${esc(state.search)}" oninput="setSearch(this.value)">
     </div>
 
     <div class="table-wrap">
@@ -378,7 +388,7 @@ function render() {
                 <td class="mono ${changeClass}">${fmtChange(r.change)}</td>
                 ${isEntry ? `
                 <td class="mono" style="color:var(--accent);font-weight:700">${r.volume_ratio}배</td>
-                <td class="mono" style="color:${r.cloud_pos==='구름 위'?'var(--buy)':r.cloud_pos==='구름 아래'?'var(--sell)':'var(--text-dim)'};font-size:11px">${r.cloud_pos||'—'}</td>
+                <td class="mono" style="color:${r.cloud_pos==='구름 위'?'var(--buy)':r.cloud_pos==='구름 아래'?'var(--sell)':'var(--text-dim)';font-size:11px">${r.cloud_pos||'—'}</td>
                 <td class="mono" style="color:${r.aligned?'var(--buy)':'var(--text-muted)'}">${r.aligned?'정배열':'—'}</td>
                 ` : `
                 <td class="mono" style="color:var(--text-dim)">${fmt(r.cloud_top)}</td>
@@ -406,15 +416,72 @@ function render() {
 // ── Event Handlers ──
 function setTab(t) { state.tab = t; render(); }
 function setMarket(m) { state.market = m; render(); }
-function setSearch(v) { state.search = v; render(); }
 function setSort(key) {
   if (state.sortKey === key) state.sortAsc = !state.sortAsc;
   else { state.sortKey = key; state.sortAsc = false; }
   render();
 }
 
+// ── Global Search (한글 입력 문제 없음 - app 외부 요소) ──
+function doGlobalSearch() {
+  const input = document.getElementById('globalSearch');
+  const q = (input?.value || '').trim();
+  if (!q) return;
+
+  const resultsDiv = document.getElementById('searchResults');
+
+  // 1) 6자리 숫자면 바로 종목 상세로 이동
+  if (/^\d{6}$/.test(q)) {
+    location.href = 'stock.html?code=' + q;
+    return;
+  }
+
+  // 2) 시그널 데이터 내에서 이름/코드 검색
+  const d = state.data;
+  if (!d) return;
+
+  const all = [...(d.buy||[]), ...(d.sell||[]), ...(d.entry||[])];
+  // 중복 제거
+  const seen = new Set();
+  const unique = all.filter(r => { if (seen.has(r.code)) return false; seen.add(r.code); return true; });
+
+  const ql = q.toLowerCase();
+  const matches = unique.filter(r => r.name.toLowerCase().includes(ql) || r.code.includes(ql));
+
+  if (matches.length > 0) {
+    resultsDiv.innerHTML = matches.slice(0, 10).map(r =>
+      `<a href="stock.html?code=${r.code}" style="display:inline-block;margin:4px 4px 4px 0;padding:4px 12px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:12px;text-decoration:none">
+        ${esc(r.name)} <span class="mono" style="color:var(--text-muted)">${r.code}</span>
+      </a>`
+    ).join('') + (matches.length > 10 ? `<span style="font-size:11px;color:var(--text-muted);margin-left:8px">외 ${matches.length-10}건</span>` : '');
+
+    // 시그널 내 필터도 적용
+    state.search = q;
+    render();
+  } else {
+    // 시그널 데이터에 없는 경우 직접 코드 입력 안내
+    resultsDiv.innerHTML = `
+      <div style="font-size:12px;color:var(--text-dim);padding:8px 0">
+        시그널 목록에 없는 종목입니다.
+        <span style="color:var(--text-muted)">종목코드 6자리를 직접 입력하면 상세 페이지로 이동합니다.</span>
+      </div>`;
+  }
+}
+
+function clearSearch() {
+  const input = document.getElementById('globalSearch');
+  if (input) input.value = '';
+  document.getElementById('searchResults').innerHTML = '';
+  state.search = '';
+  render();
+}
+
 // ── Init ──
-loadData();
+async function initApp() {
+  await loadData();
+  document.getElementById('search-bar').style.display = state.data ? 'block' : 'none';
+}
+initApp();
 </script>
 </body>
 </html>
