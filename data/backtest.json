@@ -1,0 +1,1502 @@
+{
+  "generated": "2026-04-14 10:16",
+  "end_date": "2026-04-13",
+  "lookback_days": 365,
+  "total_stocks": 350,
+  "summary": {
+    "buy": {
+      "total_signals": 2485,
+      "stats": {
+        "d1": {
+          "count": 2470,
+          "win_rate": 48.7,
+          "avg_return": 0.5,
+          "median_return": 0.0,
+          "max_gain": 29.98,
+          "max_loss": -29.91
+        },
+        "d3": {
+          "count": 2436,
+          "win_rate": 52.0,
+          "avg_return": 1.52,
+          "median_return": 0.29,
+          "max_gain": 80.74,
+          "max_loss": -27.9
+        },
+        "d5": {
+          "count": 2406,
+          "win_rate": 54.1,
+          "avg_return": 2.57,
+          "median_return": 0.64,
+          "max_gain": 171.3,
+          "max_loss": -34.43
+        },
+        "d10": {
+          "count": 2362,
+          "win_rate": 57.1,
+          "avg_return": 5.02,
+          "median_return": 1.82,
+          "max_gain": 476.23,
+          "max_loss": -37.46
+        },
+        "d20": {
+          "count": 2240,
+          "win_rate": 63.4,
+          "avg_return": 10.77,
+          "median_return": 4.46,
+          "max_gain": 494.59,
+          "max_loss": -40.28
+        }
+      }
+    },
+    "sell": {
+      "total_signals": 2131,
+      "stats": {
+        "d1": {
+          "count": 2117,
+          "win_rate": 42.0,
+          "avg_return": 0.83,
+          "median_return": 0.4,
+          "max_gain": 29.97,
+          "max_loss": -21.41
+        },
+        "d3": {
+          "count": 2105,
+          "win_rate": 41.2,
+          "avg_return": 1.58,
+          "median_return": 0.78,
+          "max_gain": 63.08,
+          "max_loss": -26.58
+        },
+        "d5": {
+          "count": 2093,
+          "win_rate": 39.5,
+          "avg_return": 2.37,
+          "median_return": 1.29,
+          "max_gain": 84.21,
+          "max_loss": -25.9
+        },
+        "d10": {
+          "count": 1993,
+          "win_rate": 36.6,
+          "avg_return": 4.9,
+          "median_return": 2.68,
+          "max_gain": 120.75,
+          "max_loss": -30.67
+        },
+        "d20": {
+          "count": 1835,
+          "win_rate": 32.8,
+          "avg_return": 9.1,
+          "median_return": 4.94,
+          "max_gain": 136.11,
+          "max_loss": -37.1
+        }
+      }
+    }
+  },
+  "recent_buy": [
+    {
+      "code": "402340",
+      "name": "SK스퀘어",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 580000,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "007660",
+      "name": "이수페타시스",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 119700,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "062040",
+      "name": "산일전기",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 172900,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "103590",
+      "name": "일진전기",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 83000,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "336260",
+      "name": "두산퓨얼셀",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 37550,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "462870",
+      "name": "시프트업",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 32850,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "028300",
+      "name": "HLB",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 58300,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "257720",
+      "name": "실리콘투",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 46900,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "005290",
+      "name": "동진쎄미켐",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 52200,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "347700",
+      "name": "스피어",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 40600,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "458870",
+      "name": "씨어스테크놀로지",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 47550,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "166090",
+      "name": "하나머티리얼즈",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 62700,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "078160",
+      "name": "메디포스트",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 23900,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "126340",
+      "name": "비나텍",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 116200,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "253590",
+      "name": "네오셈",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 16460,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "086790",
+      "name": "하나금융지주",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 119500,
+      "returns": {
+        "d1": 0.42,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "033780",
+      "name": "KT&G",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 164300,
+      "returns": {
+        "d1": 0.79,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "030200",
+      "name": "KT",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 62100,
+      "returns": {
+        "d1": 1.45,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "032640",
+      "name": "LG유플러스",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 17410,
+      "returns": {
+        "d1": -0.34,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "078930",
+      "name": "GS",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 71700,
+      "returns": {
+        "d1": 1.39,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "001440",
+      "name": "대한전선",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 31700,
+      "returns": {
+        "d1": 0.95,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "003570",
+      "name": "SNT다이내믹스",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 56300,
+      "returns": {
+        "d1": -0.18,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "000500",
+      "name": "가온전선",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 106100,
+      "returns": {
+        "d1": -3.58,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "141080",
+      "name": "리가켐바이오",
+      "market": "KOSDAQ",
+      "date": "2026-04-10",
+      "price": 188200,
+      "returns": {
+        "d1": 0.32,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "357780",
+      "name": "솔브레인",
+      "market": "KOSDAQ",
+      "date": "2026-04-10",
+      "price": 429500,
+      "returns": {
+        "d1": -2.91,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "039200",
+      "name": "오스코텍",
+      "market": "KOSDAQ",
+      "date": "2026-04-10",
+      "price": 53000,
+      "returns": {
+        "d1": 4.15,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "124500",
+      "name": "아이티센글로벌",
+      "market": "KOSDAQ",
+      "date": "2026-04-10",
+      "price": 52000,
+      "returns": {
+        "d1": -2.12,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "036830",
+      "name": "솔브레인홀딩스",
+      "market": "KOSDAQ",
+      "date": "2026-04-10",
+      "price": 54000,
+      "returns": {
+        "d1": 1.67,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "373220",
+      "name": "LG에너지솔루션",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 421000,
+      "returns": {
+        "d1": -2.14,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "105560",
+      "name": "KB금융",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 154200,
+      "returns": {
+        "d1": 2.66,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "055550",
+      "name": "신한지주",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 96600,
+      "returns": {
+        "d1": 2.17,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "267260",
+      "name": "HD현대일렉트릭",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 980000,
+      "returns": {
+        "d1": 1.94,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "010140",
+      "name": "삼성중공업",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 28150,
+      "returns": {
+        "d1": 1.42,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "096770",
+      "name": "SK이노베이션",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 124000,
+      "returns": {
+        "d1": -1.29,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "003230",
+      "name": "삼양식품",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 1186000,
+      "returns": {
+        "d1": 4.38,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "443060",
+      "name": "HD현대마린솔루션",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 185300,
+      "returns": {
+        "d1": 0.59,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "036570",
+      "name": "엔씨소프트",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 234000,
+      "returns": {
+        "d1": 2.56,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "271560",
+      "name": "오리온",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 130400,
+      "returns": {
+        "d1": 1.53,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "000990",
+      "name": "DB하이텍",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 92600,
+      "returns": {
+        "d1": 2.38,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "004170",
+      "name": "신세계",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 346500,
+      "returns": {
+        "d1": -1.59,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "026960",
+      "name": "동서",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 27450,
+      "returns": {
+        "d1": 1.09,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "192820",
+      "name": "코스맥스",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 185800,
+      "returns": {
+        "d1": 0.48,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "008770",
+      "name": "호텔신라",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 48950,
+      "returns": {
+        "d1": 2.35,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "007070",
+      "name": "GS리테일",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 22450,
+      "returns": {
+        "d1": -1.34,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "005070",
+      "name": "코스모신소재",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 54500,
+      "returns": {
+        "d1": 0.92,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "247540",
+      "name": "에코프로비엠",
+      "market": "KOSDAQ",
+      "date": "2026-04-09",
+      "price": 206000,
+      "returns": {
+        "d1": -2.18,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "101490",
+      "name": "에스앤에스텍",
+      "market": "KOSDAQ",
+      "date": "2026-04-09",
+      "price": 102100,
+      "returns": {
+        "d1": -3.92,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "137400",
+      "name": "피엔티",
+      "market": "KOSDAQ",
+      "date": "2026-04-09",
+      "price": 49750,
+      "returns": {
+        "d1": -0.4,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "036810",
+      "name": "에프에스티",
+      "market": "KOSDAQ",
+      "date": "2026-04-09",
+      "price": 40350,
+      "returns": {
+        "d1": -2.23,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "000660",
+      "name": "SK하이닉스",
+      "market": "KOSPI",
+      "date": "2026-04-08",
+      "price": 1033000,
+      "returns": {
+        "d1": -3.39,
+        "d3": 0.68,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    }
+  ],
+  "recent_sell": [
+    {
+      "code": "005380",
+      "name": "현대차",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 478500,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "028260",
+      "name": "삼성물산",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 289500,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "005490",
+      "name": "POSCO홀딩스",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 360000,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "267250",
+      "name": "HD현대",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 244000,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "323410",
+      "name": "카카오뱅크",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 24950,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "005830",
+      "name": "DB손해보험",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 167200,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 38500,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "026960",
+      "name": "동서",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 27250,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "051600",
+      "name": "한전KPS",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 57200,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "000500",
+      "name": "가온전선",
+      "market": "KOSPI",
+      "date": "2026-04-13",
+      "price": 102300,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "247540",
+      "name": "에코프로비엠",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 199000,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "226950",
+      "name": "올릭스",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 161800,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "089030",
+      "name": "테크윙",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 53000,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "225570",
+      "name": "넥슨게임즈",
+      "market": "KOSDAQ",
+      "date": "2026-04-13",
+      "price": 11660,
+      "returns": {
+        "d1": null,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "009970",
+      "name": "영원무역홀딩스",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 216500,
+      "returns": {
+        "d1": -3.0,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "001430",
+      "name": "세아베스틸지주",
+      "market": "KOSPI",
+      "date": "2026-04-10",
+      "price": 63100,
+      "returns": {
+        "d1": 0.63,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "087010",
+      "name": "펩트론",
+      "market": "KOSDAQ",
+      "date": "2026-04-10",
+      "price": 267500,
+      "returns": {
+        "d1": -2.8,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "010950",
+      "name": "S-Oil",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 119600,
+      "returns": {
+        "d1": 0.92,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "005830",
+      "name": "DB손해보험",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 162400,
+      "returns": {
+        "d1": 4.25,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "307950",
+      "name": "현대오토에버",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 393500,
+      "returns": {
+        "d1": -0.51,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "018670",
+      "name": "SK가스",
+      "market": "KOSPI",
+      "date": "2026-04-09",
+      "price": 238000,
+      "returns": {
+        "d1": 2.73,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "226950",
+      "name": "올릭스",
+      "market": "KOSDAQ",
+      "date": "2026-04-09",
+      "price": 160800,
+      "returns": {
+        "d1": 2.49,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "005290",
+      "name": "동진쎄미켐",
+      "market": "KOSDAQ",
+      "date": "2026-04-09",
+      "price": 45050,
+      "returns": {
+        "d1": 9.88,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "232140",
+      "name": "와이씨",
+      "market": "KOSDAQ",
+      "date": "2026-04-09",
+      "price": 18010,
+      "returns": {
+        "d1": 8.27,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "174900",
+      "name": "앱클론",
+      "market": "KOSDAQ",
+      "date": "2026-04-09",
+      "price": 50700,
+      "returns": {
+        "d1": -0.79,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "126340",
+      "name": "비나텍",
+      "market": "KOSDAQ",
+      "date": "2026-04-09",
+      "price": 96400,
+      "returns": {
+        "d1": 8.61,
+        "d3": null,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "373220",
+      "name": "LG에너지솔루션",
+      "market": "KOSPI",
+      "date": "2026-04-08",
+      "price": 406000,
+      "returns": {
+        "d1": 3.69,
+        "d3": -1.11,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "064350",
+      "name": "현대로템",
+      "market": "KOSPI",
+      "date": "2026-04-08",
+      "price": 206500,
+      "returns": {
+        "d1": -1.69,
+        "d3": 0.24,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "028670",
+      "name": "팬오션",
+      "market": "KOSPI",
+      "date": "2026-04-08",
+      "price": 5160,
+      "returns": {
+        "d1": 0.78,
+        "d3": 5.23,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "007070",
+      "name": "GS리테일",
+      "market": "KOSPI",
+      "date": "2026-04-08",
+      "price": 21550,
+      "returns": {
+        "d1": 4.18,
+        "d3": 2.32,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "005380",
+      "name": "현대차",
+      "market": "KOSPI",
+      "date": "2026-04-07",
+      "price": 473000,
+      "returns": {
+        "d1": 7.4,
+        "d3": 3.49,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "105560",
+      "name": "KB금융",
+      "market": "KOSPI",
+      "date": "2026-04-07",
+      "price": 146700,
+      "returns": {
+        "d1": 6.34,
+        "d3": 7.91,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "086790",
+      "name": "하나금융지주",
+      "market": "KOSPI",
+      "date": "2026-04-07",
+      "price": 111200,
+      "returns": {
+        "d1": 5.31,
+        "d3": 7.46,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "267250",
+      "name": "HD현대",
+      "market": "KOSPI",
+      "date": "2026-04-07",
+      "price": 236500,
+      "returns": {
+        "d1": 6.13,
+        "d3": 6.55,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "000990",
+      "name": "DB하이텍",
+      "market": "KOSPI",
+      "date": "2026-04-07",
+      "price": 87800,
+      "returns": {
+        "d1": 7.52,
+        "d3": 7.97,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "103590",
+      "name": "일진전기",
+      "market": "KOSPI",
+      "date": "2026-04-07",
+      "price": 73000,
+      "returns": {
+        "d1": 9.59,
+        "d3": 10.96,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "192820",
+      "name": "코스맥스",
+      "market": "KOSPI",
+      "date": "2026-04-07",
+      "price": 180100,
+      "returns": {
+        "d1": 2.94,
+        "d3": 3.66,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "000250",
+      "name": "삼천당제약",
+      "market": "KOSDAQ",
+      "date": "2026-04-07",
+      "price": 519000,
+      "returns": {
+        "d1": -6.55,
+        "d3": -2.7,
+        "d5": null,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "042660",
+      "name": "한화오션",
+      "market": "KOSPI",
+      "date": "2026-04-06",
+      "price": 122000,
+      "returns": {
+        "d1": -0.9,
+        "d3": 1.23,
+        "d5": -1.56,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "010140",
+      "name": "삼성중공업",
+      "market": "KOSPI",
+      "date": "2026-04-06",
+      "price": 27000,
+      "returns": {
+        "d1": -0.74,
+        "d3": 4.26,
+        "d5": 2.22,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "443060",
+      "name": "HD현대마린솔루션",
+      "market": "KOSPI",
+      "date": "2026-04-06",
+      "price": 173900,
+      "returns": {
+        "d1": -1.09,
+        "d3": 6.56,
+        "d5": 6.15,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "001440",
+      "name": "대한전선",
+      "market": "KOSPI",
+      "date": "2026-04-06",
+      "price": 28900,
+      "returns": {
+        "d1": -2.6,
+        "d3": 5.19,
+        "d5": 10.73,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "336260",
+      "name": "두산퓨얼셀",
+      "market": "KOSPI",
+      "date": "2026-04-06",
+      "price": 35750,
+      "returns": {
+        "d1": -3.5,
+        "d3": 0.7,
+        "d5": 5.03,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "003570",
+      "name": "SNT다이내믹스",
+      "market": "KOSPI",
+      "date": "2026-04-06",
+      "price": 52000,
+      "returns": {
+        "d1": -5.58,
+        "d3": 1.54,
+        "d5": 8.08,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "458870",
+      "name": "씨어스테크놀로지",
+      "market": "KOSDAQ",
+      "date": "2026-04-06",
+      "price": 45050,
+      "returns": {
+        "d1": -4.66,
+        "d3": 0.78,
+        "d5": 5.55,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "174900",
+      "name": "앱클론",
+      "market": "KOSDAQ",
+      "date": "2026-04-06",
+      "price": 50100,
+      "returns": {
+        "d1": 1.6,
+        "d3": 1.2,
+        "d5": 0.2,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "000270",
+      "name": "기아",
+      "market": "KOSPI",
+      "date": "2026-04-03",
+      "price": 150200,
+      "returns": {
+        "d1": 0.93,
+        "d3": 5.99,
+        "d5": -0.8,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "003670",
+      "name": "포스코퓨처엠",
+      "market": "KOSPI",
+      "date": "2026-04-03",
+      "price": 211500,
+      "returns": {
+        "d1": -0.24,
+        "d3": 2.84,
+        "d5": 2.84,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "103590",
+      "name": "일진전기",
+      "market": "KOSPI",
+      "date": "2026-04-03",
+      "price": 71000,
+      "returns": {
+        "d1": 7.04,
+        "d3": 12.68,
+        "d5": 14.08,
+        "d10": null,
+        "d20": null
+      }
+    },
+    {
+      "code": "014680",
+      "name": "한솔케미칼",
+      "market": "KOSPI",
+      "date": "2026-04-03",
+      "price": 264500,
+      "returns": {
+        "d1": 0.38,
+        "d3": 3.02,
+        "d5": 4.73,
+        "d10": null,
+        "d20": null
+      }
+    }
+  ]
+}
