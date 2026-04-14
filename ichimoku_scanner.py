@@ -521,8 +521,19 @@ def main():
             "entry": [remap(r) for r in entries],
         }
         json_path.parent.mkdir(parents=True, exist_ok=True)
+        # NaN → None 변환 (JavaScript JSON 호환)
+        import math
+        def clean_nan(obj):
+            if isinstance(obj, float) and math.isnan(obj):
+                return None
+            if isinstance(obj, dict):
+                return {k: clean_nan(v) for k, v in obj.items()}
+            if isinstance(obj, list):
+                return [clean_nan(i) for i in obj]
+            return obj
+
         with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(json_data, f, ensure_ascii=False, indent=2)
+            json.dump(clean_nan(json_data), f, ensure_ascii=False, indent=2)
         print(f"  💾 JSON 저장: {json_path.absolute()}")
 
     print()
