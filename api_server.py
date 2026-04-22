@@ -27,6 +27,7 @@ from fastapi.staticfiles import StaticFiles
 # ── 스캐너 로직 (ichimoku_scanner.py에서 가져옴) ─────────────────
 
 import pandas as pd
+import requests
 from pykrx import stock
 
 try:
@@ -278,6 +279,59 @@ async def serve_data(filepath: str):
     return {"error": "파일 없음"}
 
 
+@app.get("/api/news/{code}")
+async def get_news(code: str):
+    """종목 뉴스를 네이버 금융에서 가져오기."""
+    import re
+    try:
+        from bs4 import BeautifulSoup
+    except ImportError:
+        return {"code": code, "news": [], "error": "beautifulsoup4 미설치"}
+
+    try:
+        url = f"https://finance.naver.com/item/news_news.naver?code={code}&page=1&sm=title_entity_id.basic&clusterId="
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+        }
+        resp = requests.get(url, headers=headers, timeout=10)
+        resp.encoding = "euc-kr"
+        soup = BeautifulSoup(resp.text, "html.parser")
+
+        news_list = []
+        # 네이버 금융 뉴스 테이블 파싱
+        rows = soup.select("table.type5 tbody tr")
+        for row in rows:
+            title_tag = row.select_one("td.title a")
+            date_tag = row.select_one("td.date")
+            source_tag = row.select_one("td.info")
+
+            if not title_tag:
+                continue
+
+            title = title_tag.get_text(strip=True)
+            link = title_tag.get("href", "")
+            if link and not link.startswith("http"):
+                link = "https://finance.naver.com" + link
+            date = date_tag.get_text(strip=True) if date_tag else ""
+            source = source_tag.get_text(strip=True) if source_tag else ""
+
+            if title:
+                news_list.append({
+                    "title": title,
+                    "link": link,
+                    "date": date,
+                    "source": source,
+                })
+
+            if len(news_list) >= 20:
+                break
+
+        return {"code": code, "news": news_list}
+
+    except Exception as e:
+        return {"code": code, "news": [], "error": str(e)}
+
+
 # ── 실행 ──────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
@@ -291,5 +345,4 @@ if __name__ == "__main__":
     print("  ╚══════════════════════════════════════════════╝")
     print()
 
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
