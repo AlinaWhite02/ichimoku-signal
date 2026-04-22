@@ -276,7 +276,7 @@ async function loadStockData(code) {
       const data = await res.json();
       if (!data.buy) continue;
 
-      const allStocks = [...(data.buy || []), ...(data.sell || [])];
+      const allStocks = [...(data.buy || []), ...(data.sell || []), ...(data.entry || [])];
       const stock = allStocks.find(s => s.code === code);
 
       return { signalData: data, stock, date: data.date };
