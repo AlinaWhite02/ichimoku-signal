@@ -1,6 +1,8 @@
 pykrx>=1.0.45
-pandas>=2.1.4
+pandas>=2.0.0
 tabulate>=0.9.0
 finance-datareader>=0.9.0
 fastapi>=0.100.0
 uvicorn>=0.23.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
