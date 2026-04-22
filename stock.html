@@ -211,6 +211,13 @@ a:hover { text-decoration: underline; }
   justify-content: space-between;
 }
 
+.spinner {
+  width: 32px; height: 32px; border: 3px solid var(--border);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
 @media (max-width: 640px) {
   .hero-top { flex-direction: column; }
   .hero-right { text-align: left; }
@@ -330,8 +337,10 @@ function render(stock, report, date) {
     <button class="tab-btn active" onclick="switchTab('overview')">기업개요</button>
     <button class="tab-btn" onclick="switchTab('analysis')">사업분석</button>
     ${report.financials ? '<button class="tab-btn" onclick="switchTab(\'financials\')">재무</button>' : ''}
+    <button class="tab-btn" onclick="switchTab('news'); loadNews('${code}')">뉴스</button>
   ` : `
     <button class="tab-btn active" onclick="switchTab('overview')">기업개요</button>
+    <button class="tab-btn" onclick="switchTab('news'); loadNews('${code}')">뉴스</button>
   `;
 
   // Report content
@@ -442,9 +451,16 @@ function render(stock, report, date) {
     <div class="tab-content active" id="tab-overview">${overviewHTML}</div>
     <div class="tab-content" id="tab-analysis">${analysisHTML || '<div class="empty-state"><div class="empty-state-icon">📝</div><div class="empty-state-title">준비 중</div></div>'}</div>
     <div class="tab-content" id="tab-financials">${financialsHTML || ''}</div>
+    <div class="tab-content" id="tab-news">
+      <div style="padding:40px 0;text-align:center;color:var(--text-muted)">
+        <div class="spinner" style="width:24px;height:24px;border-width:2px;margin:0 auto 12px"></div>
+        뉴스를 불러오는 중...
+      </div>
+    </div>
 
     <div class="detail-footer">
       <span>※ 본 자료는 기술적 지표 및 기업 참고자료이며, 투자 판단은 본인 책임입니다.</span>
+      <span class="mono">Powered by 밸류파인더</span>
     </div>
   `;
 }
@@ -458,29 +474,71 @@ function switchTab(id) {
 
 function esc(s) { return s ? s.replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; }
 
+// ── News Loading ──
+let newsLoaded = false;
+async function loadNews(code) {
+  if (newsLoaded) return;
+  const newsDiv = document.getElementById('tab-news');
+
+  try {
+    // API 서버에서 뉴스 가져오기
+    const res = await fetch('/api/news/' + code);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.news && data.news.length > 0) {
+        newsDiv.innerHTML = `
+          <div style="padding:16px 0">
+            <div style="font-size:11px;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)">최근 뉴스</div>
+            ${data.news.map(n => `
+              <a href="${n.link}" target="_blank" rel="noopener" style="display:block;padding:12px 0;border-bottom:1px solid rgba(26,31,46,0.5);text-decoration:none;transition:background 0.1s"
+                onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'">
+                <div style="font-size:14px;color:var(--text);line-height:1.5;margin-bottom:4px">${esc(n.title)}</div>
+                <div style="font-size:11px;color:var(--text-muted)">
+                  ${n.source ? '<span style="margin-right:12px">' + esc(n.source) + '</span>' : ''}
+                  ${n.date ? '<span>' + esc(n.date) + '</span>' : ''}
+                </div>
+              </a>
+            `).join('')}
+          </div>
+        `;
+        newsLoaded = true;
+        return;
+      }
+    }
+  } catch(e) {}
+
+  // API 실패 시 네이버 금융 링크로 안내
+  newsDiv.innerHTML = `
+    <div style="padding:40px 0;text-align:center">
+      <div style="font-size:14px;color:var(--text-dim);margin-bottom:16px">뉴스를 직접 불러올 수 없습니다.</div>
+      <a href="https://finance.naver.com/item/news.naver?code=${code}" target="_blank" rel="noopener"
+        style="display:inline-block;padding:10px 24px;background:var(--accent);color:#fff;border-radius:6px;font-size:13px;text-decoration:none;font-weight:600">
+        네이버 금융에서 뉴스 보기 →
+      </a>
+      <div style="margin-top:12px">
+        <a href="https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(document.querySelector('.stock-name')?.textContent || code)}" target="_blank" rel="noopener"
+          style="font-size:12px;color:var(--text-muted);text-decoration:underline">
+          네이버 뉴스 검색에서 보기
+        </a>
+      </div>
+    </div>
+  `;
+  newsLoaded = true;
+}
+
 // ── Init ──
 async function init() {
   const { stock, date } = await loadStockData(stockCode);
   const report = await loadReport(stockCode);
 
-  // 시그널에도 없고 리포트도 없으면 → 종목명이라도 찾아서 기본 페이지 표시
   if (!stock && !report) {
-    let stockName = stockCode;
-    try {
-      const urls = ['/data/stocklist.json','./data/stocklist.json','https://raw.githubusercontent.com/AlinaWhite02/ichimoku-signal/main/data/stocklist.json'];
-      for (const url of urls) {
-        try {
-          const res = await fetch(url);
-          if (res.ok) {
-            const list = await res.json();
-            const found = list.find(s => s.code === stockCode);
-            if (found) { stockName = found.name; break; }
-          }
-        } catch(e) {}
-      }
-    } catch(e) {}
-
-    render(null, { name: stockName, summary: null, sections: [] }, null);
+    document.getElementById('app').innerHTML = `
+      <nav class="back-nav"><a href="/">← 대시보드로 돌아가기</a></nav>
+      <div class="empty-state" style="padding:80px 20px">
+        <div class="empty-state-icon">🔍</div>
+        <div class="empty-state-title">종목 정보를 찾을 수 없습니다</div>
+        <div class="empty-state-desc">종목코드: ${stockCode}<br>시그널 데이터에 포함되지 않은 종목이거나, 스캔 데이터가 없습니다.</div>
+      </div>`;
     return;
   }
 
