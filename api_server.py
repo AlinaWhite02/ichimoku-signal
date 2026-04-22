@@ -280,56 +280,65 @@ async def serve_data(filepath: str):
 
 
 @app.get("/api/news/{code}")
+@app.get("/api/news/{code}")
 async def get_news(code: str):
-    """종목 뉴스를 네이버 금융에서 가져오기."""
-    import re
+    """종목 뉴스를 Google News RSS에서 가져오기."""
+    import xml.etree.ElementTree as ET
+
+    # 종목명 찾기
+    stock_name = code
     try:
-        from bs4 import BeautifulSoup
-    except ImportError:
-        return {"code": code, "news": [], "error": "beautifulsoup4 미설치"}
+        stock_list_path = Path(__file__).parent / "data" / "stocklist.json"
+        if stock_list_path.exists():
+            with open(stock_list_path, "r", encoding="utf-8") as f:
+                sl = json.load(f)
+                found = next((s for s in sl if s["code"] == code), None)
+                if found:
+                    stock_name = found["name"]
+    except Exception:
+        pass
 
     try:
-        url = f"https://finance.naver.com/item/news_news.naver?code={code}&page=1&sm=title_entity_id.basic&clusterId="
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-        }
+        query = f"{stock_name} 주식"
+        url = f"https://news.google.com/rss/search?q={query}&hl=ko&gl=KR&ceid=KR:ko"
+        headers = {"User-Agent": "Mozilla/5.0"}
         resp = requests.get(url, headers=headers, timeout=10)
-        resp.encoding = "euc-kr"
-        soup = BeautifulSoup(resp.text, "html.parser")
+        resp.encoding = "utf-8"
 
+        root = ET.fromstring(resp.content)
         news_list = []
-        # 네이버 금융 뉴스 테이블 파싱
-        rows = soup.select("table.type5 tbody tr")
-        for row in rows:
-            title_tag = row.select_one("td.title a")
-            date_tag = row.select_one("td.date")
-            source_tag = row.select_one("td.info")
 
-            if not title_tag:
-                continue
+        for item in root.findall(".//item"):
+            title = item.findtext("title", "")
+            link = item.findtext("link", "")
+            pub_date = item.findtext("pubDate", "")
+            source = item.findtext("source", "")
 
-            title = title_tag.get_text(strip=True)
-            link = title_tag.get("href", "")
-            if link and not link.startswith("http"):
-                link = "https://finance.naver.com" + link
-            date = date_tag.get_text(strip=True) if date_tag else ""
-            source = source_tag.get_text(strip=True) if source_tag else ""
+            # 날짜 정리 (Sat, 12 Apr 2026 09:00:00 GMT → 2026-04-12)
+            date_str = ""
+            if pub_date:
+                try:
+                    from email.utils import parsedate_to_datetime
+                    dt = parsedate_to_datetime(pub_date)
+                    date_str = dt.strftime("%Y-%m-%d %H:%M")
+                except Exception:
+                    date_str = pub_date[:16]
 
             if title:
                 news_list.append({
                     "title": title,
                     "link": link,
-                    "date": date,
+                    "date": date_str,
                     "source": source,
                 })
 
             if len(news_list) >= 20:
                 break
 
-        return {"code": code, "news": news_list}
+        return {"code": code, "name": stock_name, "news": news_list}
 
     except Exception as e:
-        return {"code": code, "news": [], "error": str(e)}
+        return {"code": code, "name": stock_name, "news": [], "error": str(e)}
 
 
 # ── 실행 ──────────────────────────────────────────────────────────
